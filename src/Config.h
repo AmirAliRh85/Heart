@@ -1,0 +1,84 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include "../external/glad/include/glad.h"
+#include <GLFW/glfw3.h>
+
+#define GCL_MAJOR_VERSION   0
+#define GCL_MINOR_VERSION   1
+#define GCL_PATCH_VERSION   3
+
+#define GCL_VERSION         "0.1.3"
+
+#define GCL_OK                      0
+#define GCL_ERROR                   -1
+#define GCL_WARNING                 1
+
+/*
+ *      0.0.0       Initial version
+ *      0.1.0       ADD : rendering Text
+ *      0.1.1       FIX : Placing English text and image rendering into dynamic batching
+ *      0.1.2       FIX : text input
+ *      0.1.3       ADD : Mouse Wheel
+ */
+
+typedef struct
+{
+    int x;
+    int y;
+} gcl_Vec2;
+
+typedef struct
+{
+    double x;
+    double y;
+} gcl_Vec2f;
+
+typedef struct
+{
+    float x;
+    float y;
+} gcl_Pos;
+
+typedef struct
+{
+    int w;
+    int h;
+} gcl_Size;
+
+typedef struct
+{
+    float x , y;
+    int w , h;
+} gcl_Rect;
+
+inline void gcl_Rect_center(gcl_Rect* rct1 , gcl_Rect* rct2)
+{
+    rct1->x = rct2->x + (rct2->w - rct1->w) / 2;
+    rct1->y = rct2->y + (rct2->h - rct1->h) / 2;
+}
+
+
+typedef struct
+{
+    int r;
+    int g;
+    int b;
+    int a;
+} ColorRGBA;
+
+typedef struct
+{
+    int r;
+    int g;
+    int b;
+} ColorRGB;
+
+
+#define RED         255 , 0 , 0
+#define GREEN       0 , 255 , 0
+#define BLUE        0 , 0 , 255
+#define WHITE       255 , 255 , 255
+#define BLACK       0 , 0 , 0
+
+#endif

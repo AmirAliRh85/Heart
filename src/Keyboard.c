@@ -1,0 +1,52 @@
+#include "./Config.h"
+#include "./Window.h"
+
+
+
+static void __textInput(GLFWwindow* window , unsigned int code_point)
+{
+    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx - 1] = (char)code_point;
+    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx] = '\0';
+    WINDOW.Keyboard.TIH.currentIdx += 1;
+}
+
+
+bool gcl_isKeyPressed(KeyboardFlag keyboard_flag)
+{
+    if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_PRESS)
+        return true;
+    
+    return false;
+}
+
+bool gcl_isKeyReleased(KeyboardFlag keyboard_flag)
+{
+    if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_RELEASE)
+        return true;
+    
+    return false;
+}
+
+
+void gcl_enableTextInput(char* ch_ptr , int current_string_length , int buffer_size)
+{
+    if (WINDOW.Keyboard.TIH.objectAddress == NULL || WINDOW.Keyboard.TIH.objectAddress != ch_ptr)
+    {
+        WINDOW.Keyboard.TIH.objectAddress = ch_ptr;
+        WINDOW.Keyboard.TIH.currentIdx = current_string_length;
+        WINDOW.Keyboard.TIH.bufferSize = buffer_size;
+    }
+
+    glfwSetCharCallback(WINDOW.GLFW_window , __textInput);
+    if (glfwGetKey(WINDOW.GLFW_window , GLFW_KEY_BACKSPACE) == GLFW_PRESS)
+        if (WINDOW.Keyboard.TIH.currentIdx > 1)
+        {
+            WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx - 2] = '\0';
+            WINDOW.Keyboard.TIH.currentIdx -= 1;
+        }
+}
+
+void gcl_disableTextInput()
+{
+    glfwSetCharCallback(WINDOW.GLFW_window , NULL);
+}

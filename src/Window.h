@@ -1,0 +1,316 @@
+#ifndef GCL_WINDOW_H
+#define GCL_WINDOW_H
+
+#include "./Config.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+
+// #ifndef GCL_WINDOW_ENABLE_WAIT_EVENTS
+//     #define  GCL_WINDOW_ENABLE_WAIT_EVENTS
+// #endif
+
+
+//                      -- Keyboard --
+
+typedef enum
+{
+    KEY_SPACE              =    32 ,
+    KEY_APOSTROPHE         =    39 , /* ' */
+    KEY_COMMA              =    44 , /* , */
+    KEY_MINUS              =    45 , /* - */
+    KEY_PERIOD             =    46 , /* . */
+    KEY_SLASH              =    47 , /* / */
+    KEY_0                  =    48 ,
+    KEY_1                  =    49 ,
+    KEY_2                  =    50 ,
+    KEY_3                  =    51 ,
+    KEY_4                  =    52 ,
+    KEY_5                  =    53 ,
+    KEY_6                  =    54 ,
+    KEY_7                  =    55 ,
+    KEY_8                  =    56 ,
+    KEY_9                  =    57 ,
+    KEY_SEMICOLON          =    59 , /* ; */
+    KEY_EQUAL              =    61 , /* = */
+    KEY_A                  =    65 ,
+    KEY_B                  =    66 ,
+    KEY_C                  =    67 ,
+    KEY_D                  =    68 ,
+    KEY_E                  =    69 ,
+    KEY_F                  =    70 ,
+    KEY_G                  =    71 ,
+    KEY_H                  =    72 ,
+    KEY_I                  =    73 ,
+    KEY_J                  =    74 ,
+    KEY_K                  =    75 ,
+    KEY_L                  =    76 ,
+    KEY_M                  =    77 ,
+    KEY_N                  =    78 ,
+    KEY_O                  =    79 ,
+    KEY_P                  =    80 ,
+    KEY_Q                  =    81 ,
+    KEY_R                  =    82 ,
+    KEY_S                  =    83 ,
+    KEY_T                  =    84 ,
+    KEY_U                  =    85 ,
+    KEY_V                  =    86 ,
+    KEY_W                  =    87 ,
+    KEY_X                  =    88 ,
+    KEY_Y                  =    89 ,
+    KEY_Z                  =    90 ,
+    KEY_LEFT_BRACKET       =    91 , /* [ */
+    KEY_BACKSLASH          =    92 , /* \ */
+    KEY_RIGHT_BRACKET      =    93 , /* ] */
+    KEY_GRAVE_ACCENT       =    96 , /* ` */
+    KEY_WORLD_1            =    161, /* non-US #1 */
+    KEY_WORLD_2            =    162, /* non-US #2 */
+
+    // Function Keys
+    KEY_ESCAPE             =    256,
+    KEY_ENTER              =    257,
+    KEY_TAB                =    258,
+    KEY_BACKSPACE          =    259,
+    KEY_INSERT             =    260,
+    KEY_DELETE             =    261,
+    KEY_RIGHT              =    262,
+    KEY_LEFT               =    263,
+    KEY_DOWN               =    264,
+    KEY_UP                 =    265,
+    KEY_PAGE_UP            =    266,
+    KEY_PAGE_DOWN          =    267,
+    KEY_HOME               =    268,
+    KEY_END                =    269,
+    KEY_CAPS_LOCK          =    280,
+    KEY_SCROLL_LOCK        =    281,
+    KEY_NUM_LOCK           =    282,
+    KEY_PRINT_SCREEN       =    283,
+    KEY_PAUSE              =    284,
+    KEY_F1                 =    290,
+    KEY_F2                 =    291,
+    KEY_F3                 =    292,
+    KEY_F4                 =    293,
+    KEY_F5                 =    294,
+    KEY_F6                 =    295,
+    KEY_F7                 =    296,
+    KEY_F8                 =    297,
+    KEY_F9                 =    298,
+    KEY_F10                =    299,
+    KEY_F11                =    300,
+    KEY_F12                =    301,
+    KEY_F13                =    302,
+    KEY_F14                =    303,
+    KEY_F15                =    304,
+    KEY_F16                =    305,
+    KEY_F17                =    306,
+    KEY_F18                =    307,
+    KEY_F19                =    308,
+    KEY_F20                =    309,
+    KEY_F21                =    310,
+    KEY_F22                =    311,
+    KEY_F23                =    312,
+    KEY_F24                =    313,
+    KEY_F25                =    314,
+    KEY_KP_0               =    320,
+    KEY_KP_1               =    321,
+    KEY_KP_2               =    322,
+    KEY_KP_3               =    323,
+    KEY_KP_4               =    324,
+    KEY_KP_5               =    325,
+    KEY_KP_6               =    326,
+    KEY_KP_7               =    327,
+    KEY_KP_8               =    328,
+    KEY_KP_9               =    329,
+    KEY_KP_DECIMAL         =    330,
+    KEY_KP_DIVIDE          =    331,
+    KEY_KP_MULTIPLY        =    332,
+    KEY_KP_SUBTRACT        =    333,
+    KEY_KP_ADD             =    334,
+    KEY_KP_ENTER           =    335,
+    KEY_KP_EQUAL           =    336,
+    KEY_LEFT_SHIFT         =    340,
+    KEY_LEFT_CONTROL       =    341,
+    KEY_LEFT_ALT           =    342,
+    KEY_LEFT_SUPER         =    343,
+    KEY_RIGHT_SHIFT        =    344,
+    KEY_RIGHT_CONTROL      =    345,
+    KEY_RIGHT_ALT          =    346,
+    KEY_RIGHT_SUPER        =    347,
+    KEY_MENU               =    348,
+} KeyboardFlag;
+
+
+typedef struct TextInputHandler
+{
+    char* objectAddress;
+    int currentIdx;         // including '\0'
+    int bufferSize;         // including '\0'    
+
+} TextInputHandler;
+
+typedef struct gcl_Keyboard
+{
+    TextInputHandler TIH;
+
+} gcl_Keyboard;
+
+
+bool gcl_isKeyPressed(KeyboardFlag keyboard_flag);
+bool gcl_isKeyReleased(KeyboardFlag keyboard_flag);
+
+
+void gcl_enableTextInput(char* ch_ptr , int string_length , int buffer_size);
+void gcl_disableTextInput();
+
+
+//                      -- Mouse --
+
+typedef enum
+{
+    BUTTON_LEFT             ,
+    BUTTON_RIGHT            ,
+    BUTTON_MIDDLE           ,
+} MouseFlag;
+
+typedef enum
+{
+    HAND_CURSOR             ,
+    POINTING_HAND_CURSOR    ,
+    ARROW_CURSOR            ,
+    IBEAM_CURSOR            ,
+    CENTER_CURSOR           ,
+    CROSSHAIR_CURSOR        ,
+    NOT_ALLOWED_CURSOR      ,
+    HRESIZE_CURSOR          ,
+    VRESIZE_CURSOR          ,
+    RESIZE_EW_CURSOR        ,
+    RESIZE_NS_CURSOR        ,
+    RESIZE_NESW_CURSOR      ,
+    RESIZE_NWSE_CURSOR      ,
+} CursorFlag;
+
+
+typedef struct gcl_Mouse
+{
+    GLFWcursor* GLFW_cursor;
+    CursorFlag cursorFlag;
+
+    double x;
+    double y;
+
+} gcl_Mouse;
+
+
+bool gcl_isMouseIn(gcl_Rect rect);
+bool gcl_isMousePressed(MouseFlag mouse_flag);
+bool gcl_isMouseReleased(MouseFlag mouse_flag);
+bool gcl_isMouseClicked(MouseFlag mouse_flag);
+
+
+void gcl_setMouseCursor(CursorFlag cf);
+
+
+void gcl_enableMouseScrollMovement();
+void gcl_disableMouseScrollMovement();
+
+
+int gcl_getMousePosX();
+int gcl_getMousePosY();
+int gcl_getMouseWheelX();
+int gcl_getMouseWheelY();
+
+
+void gcl_destroyMouse();
+
+
+//                  -- RENDERER --
+void gcl_initRenderer();
+
+void gcl_drawBackground(int r , int g , int b , int a);
+
+unsigned int gcl_loadImage(const char* file_path);
+void gcl_drawImage(gcl_Rect rct , unsigned int index_to_draw);
+unsigned int gcl_loadEnglishFont(const char* font_path , unsigned int font_size);
+void gcl_drawEnglishText(gcl_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
+void __gcl_drawTextureAtlas(gcl_Rect rct);
+
+void gcl_drawTriangle(gcl_Pos point1 , gcl_Pos point2 , gcl_Pos point3 , int r , int g , int b);
+void gcl_drawFilledRectangle(gcl_Rect rect , int r , int g , int b);
+void gcl_drawCircle(gcl_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b);
+void gcl_drawFilledRoundedRectangle(gcl_Rect rect , int radius , int r , int g , int b);
+
+void gcl_drawLine(gcl_Pos point1 , gcl_Pos point2 , int r , int g , int b);
+void gcl_drawRectangle(gcl_Rect rect , int thickness , int r , int g , int b);
+
+void gcl_drawPoint(gcl_Pos point1 , int r , int g , int b);
+
+void gcl_beginScissor(gcl_Rect rect);
+void gcl_endScissor();
+
+void gcl_updateFrame();
+
+void gcl_destroyRenderer();
+
+
+//                  -- WINDOW --
+typedef enum
+{
+    WINDOW_POS_CENTERED             = -1            ,
+    WINDOW_SHOWN                    = 1 << 0        ,
+    WINDOW_MAXIMIZED                = 1 << 1        ,
+    WINDOW_MINIMIZED                = 1 << 2        ,
+    WINDOW_FULLSCREEN               = 1 << 3        ,
+    WINDOW_UNRESIZABLE              = 1 << 4        ,
+    WINDOW_BORDERLESS               = 1 << 5        ,
+    WINDOW_TRANSPARENT              = 1 << 6        ,
+} WindowFlag;
+
+typedef struct gcl_Window
+{
+    // WINDOW PROPERTY
+    int width , height , x , y;
+    int windowFlag;
+    const char* title;
+
+    // GLFW PROPERTY
+    GLFWwindow* GLFW_window;
+    GLFWmonitor* GLFW_monitor;
+    const GLFWvidmode* GLFW_mode;
+    bool isWindowInitialized;
+
+    // KEYBOARD
+    gcl_Keyboard Keyboard;
+
+    // MOUSE
+    gcl_Mouse Mouse;
+
+} gcl_Window;
+
+
+// GLOBAL VARIABLES
+extern gcl_Window WINDOW;
+
+
+int gcl_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos);
+
+void gcl_setWindowOpacity(int alpha);
+void gcl_stopWindowRunning();
+void gcl_setWindowTitle(const char* new_window_name);
+
+
+int gcl_getWindowPosX();
+int gcl_getWindowPosY();
+int gcl_getWindowHeight();
+int gcl_getWindowWidth();
+
+bool gcl_isWindowRunning();
+void gcl_updateWindow();
+
+
+void gcl_destroyWindow();
+
+
+
+#endif

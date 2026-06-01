@@ -8,5 +8,6 @@
 *.jpg
 assets/
 
-# build file
-makefile
+# Test cpp file
+main.cpp
+*test.c
