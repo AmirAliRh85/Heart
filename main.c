@@ -1,57 +1,41 @@
-#include "./GCL.h"
+#include "./Heart.h"
 
 /**             | TODO LIST |
  *  1. FIX : Mouse Wheel works but it is not efficient
- *  2. FIX : text rendering for symbols like (, $, ...
+ *  2. FIX : Sometimes text do not get rendered (fixed)
+ *  3. FIX : textInput still needs some fixes
  * 
  */
 
 int main()
 {
-    gcl_createWindow(800 , 600 , "Testing" , WINDOW_SHOWN , WINDOW_POS_CENTERED , WINDOW_POS_CENTERED);
+    hrt_createWindow(800 , 600 , "Testing" , WINDOW_SHOWN , WINDOW_POS_CENTERED , WINDOW_POS_CENTERED);
 
 
-    gcl_Rect rect_rec = {8 , 8 , 44 , 34};
-    gcl_Rect rect_tex = {10 , 10 , 40 , 30};
-    gcl_Rect rect_ta = {10 , 10 , 780 , 580};
+    hrt_Rect rect_rec = {8 , 8 , 44 , 34};
+    hrt_Rect rect_tex = {10 , 10 , 40 , 30};
+    hrt_Rect rect_ta = {10 , 10 , 780 , 580};
 
-    unsigned int font_idx = gcl_loadEnglishFont("./assets/Roboto-Regular.ttf" , 32);
-    unsigned int image_idx = gcl_loadImage("./assets/icon-bin2.png");
-    unsigned int image_idx2 = gcl_loadImage("./assets/brick.jpg");
+    unsigned int font_idx = hrt_loadEnglishFont("./assets/Roboto-Regular.ttf" , 32);
+    unsigned int image_idx = hrt_loadImage("./assets/icon-bin2.png");
+    unsigned int image_idx2 = hrt_loadImage("./assets/brick.jpg");
 
-    char* text = malloc(64);
-    text[0] = 'a';
-    text[1] = 'b';
-    text[2] = '\0';
-    gcl_enableTextInput(text , 3 , 64);
-    while (gcl_isWindowRunning())
+    hrt_Size text_size = hrt_getEnglishTextSize("Hello From GCL!" , font_idx);
+    text_size.w += 6;
+    text_size.h += 6;
+    while (hrt_isWindowRunning())
     {
-        gcl_drawBackground(45 , 45 , 45 , 240);
-
-        // if (gcl_isMouseIn(rect_rec))
-        //     gcl_drawFilledRoundedRectangle(rect_rec , 2 , 90 , 90 , 90);
-
-        // gcl_drawImage(rect_tex , image_idx);
-
-        __gcl_drawTextureAtlas(rect_ta);
-
-        if (gcl_isMouseIn((gcl_Rect){20 , 20 , 100 , 32}))
-            gcl_drawEnglishText((gcl_Pos){20 , 20} , text , font_idx , 45 , 145 , 245);
-        else
-            gcl_drawEnglishText((gcl_Pos){20 , 20} , text , font_idx , 255 , 255 , 255);
-
-        printf("%s\n" , text);
+        hrt_drawBackground(45 , 45 , 45 , 240);
 
 
-        // gcl_drawEnglishText((gcl_Pos){20 , 60} , "Hello World!" , font_idx , 50 , 255 , 255);
-        // gcl_drawEnglishText((gcl_Pos){20 , 100} , "Hello World!" , font_idx , 50 , 255 , 255);
-        // gcl_drawEnglishText((gcl_Pos){20 , 140} , "Hello World!" , font_idx , 50 , 255 , 255);
-        // gcl_drawEnglishText((gcl_Pos){20 , 180} , "Hello World!" , font_idx , 50 , 255 , 255);
+
+        hrt_drawFilledRoundedRectangle((hrt_Rect){7 , 7 , text_size.w , text_size.h} , 6 , 180 , 180 , 180);
+        hrt_drawEnglishText((hrt_Pos){10 , 10} , "Hello From GCL!" , font_idx , 125 , 125 , 125);
 
         
-        gcl_updateWindow();
+        hrt_updateWindow();
     }
 
 
-    gcl_destroyWindow();
+    hrt_destroyWindow();
 }

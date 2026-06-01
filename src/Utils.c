@@ -7,12 +7,12 @@
 
 
 
-gcl_DynamicArray* gcl_DynamicArray_create(int sizeof_obj)
+hrt_DynamicArray* hrt_DynamicArray_create(int sizeof_obj)
 {
     if (sizeof_obj <= 0)
         return NULL;
 
-    gcl_DynamicArray* da = (gcl_DynamicArray*)malloc(sizeof(gcl_DynamicArray));
+    hrt_DynamicArray* da = (hrt_DynamicArray*)malloc(sizeof(hrt_DynamicArray));
     if (!da)
         return NULL;
 
@@ -25,23 +25,23 @@ gcl_DynamicArray* gcl_DynamicArray_create(int sizeof_obj)
 }
 
 
-void gcl_DynamicArray_push(gcl_DynamicArray* da , const void* src)
+void hrt_DynamicArray_push(hrt_DynamicArray* da , const void* src)
 {
     if (da->currentIdx >= da->capacity)
-        gcl_DynamicArray_resize(da);
+        hrt_DynamicArray_resize(da);
 
     memcpy((char*)da->objectAddress + da->currentIdx * da->elementSize , src , da->elementSize);
 
     da->currentIdx += 1;
 }
 
-void gcl_DynamicArray_pop(gcl_DynamicArray* da)
+void hrt_DynamicArray_pop(hrt_DynamicArray* da)
 {
     if (da->currentIdx > 0)
         da->currentIdx -= 1;
 }
 
-void gcl_DynamicArray_resize(gcl_DynamicArray* da)
+void hrt_DynamicArray_resize(hrt_DynamicArray* da)
 {
     int new_capacity = da->capacity * 2;
 
@@ -53,7 +53,7 @@ void gcl_DynamicArray_resize(gcl_DynamicArray* da)
     da->objectAddress = new_size;
 }
 
-void gcl_DynamicArray_destroy(gcl_DynamicArray* da)
+void hrt_DynamicArray_destroy(hrt_DynamicArray* da)
 {
     if (!da->objectAddress)
         free(da->objectAddress);
@@ -61,7 +61,7 @@ void gcl_DynamicArray_destroy(gcl_DynamicArray* da)
         free(da);
 }
 
-void* gcl_DynamicArray_at(gcl_DynamicArray* da , int index)
+void* hrt_DynamicArray_at(hrt_DynamicArray* da , int index)
 {
     if (index >= 0 && index < da->currentIdx)
         return ((char*)da->objectAddress + (index * da->elementSize));
@@ -69,12 +69,12 @@ void* gcl_DynamicArray_at(gcl_DynamicArray* da , int index)
         return NULL;
 }
 
-int gcl_DynamicArray_length(gcl_DynamicArray* da)
+int hrt_DynamicArray_length(hrt_DynamicArray* da)
 {
     return da->currentIdx;
 }
 
-int gcl_DynamicArray_capacity(gcl_DynamicArray* da)
+int hrt_DynamicArray_capacity(hrt_DynamicArray* da)
 {
     return da->capacity;
 }
@@ -83,12 +83,12 @@ int gcl_DynamicArray_capacity(gcl_DynamicArray* da)
 
 
 
-gcl_Pair* gcl_Pair_create(int sizeof_first_item , int sizeof_second_item)
+hrt_Pair* hrt_Pair_create(int sizeof_first_item , int sizeof_second_item)
 {
     if (sizeof_first_item <= 0 || sizeof_second_item <= 0)
         return NULL;
 
-    gcl_Pair* p = (gcl_Pair*)malloc(sizeof(gcl_Pair));
+    hrt_Pair* p = (hrt_Pair*)malloc(sizeof(hrt_Pair));
 
     if (!p)        
         return NULL;
@@ -96,7 +96,7 @@ gcl_Pair* gcl_Pair_create(int sizeof_first_item , int sizeof_second_item)
     p->firstItemSize = sizeof_first_item;
     p->secondItemSize = sizeof_second_item;
     p->elementSize = p->firstItemSize + p->secondItemSize;
-    p->dArray = gcl_DynamicArray_create(p->elementSize);
+    p->dArray = hrt_DynamicArray_create(p->elementSize);
 
     if (p->dArray == NULL)
     {
@@ -107,13 +107,13 @@ gcl_Pair* gcl_Pair_create(int sizeof_first_item , int sizeof_second_item)
     return p;
 }
 
-void gcl_Pair_push(gcl_Pair* p , void* first_item , void* second_item)
+void hrt_Pair_push(hrt_Pair* p , void* first_item , void* second_item)
 {
     if (!p || !first_item || !second_item)
         return;
 
     if (p->dArray->currentIdx >= p->dArray->capacity)
-        gcl_DynamicArray_resize(p->dArray);
+        hrt_DynamicArray_resize(p->dArray);
 
     void* dest = (char*)p->dArray->objectAddress + p->dArray->elementSize * p->dArray->currentIdx;
     if (!dest) return;
@@ -124,24 +124,24 @@ void gcl_Pair_push(gcl_Pair* p , void* first_item , void* second_item)
     p->dArray->currentIdx += 1;
 }
 
-void gcl_Pair_pop(gcl_Pair* p)
+void hrt_Pair_pop(hrt_Pair* p)
 {
     if (p && p->dArray)
-        gcl_DynamicArray_pop(p->dArray);
+        hrt_DynamicArray_pop(p->dArray);
 }
 
-void gcl_Pair_destroy(gcl_Pair* p)
+void hrt_Pair_destroy(hrt_Pair* p)
 {
-    gcl_DynamicArray_destroy(p->dArray);
+    hrt_DynamicArray_destroy(p->dArray);
     free(p);
 }
 
-void* gcl_Pair_at(gcl_Pair* p , int index , gcl_PairFlag flag)
+void* hrt_Pair_at(hrt_Pair* p , int index , hrt_PairFlag flag)
 {
     if (index < 0 || index >= p->dArray->currentIdx)
         return NULL;
 
-    void* object_addres = gcl_DynamicArray_at(p->dArray , index);
+    void* object_addres = hrt_DynamicArray_at(p->dArray , index);
 
     if (flag == FIRST)
         return object_addres;
@@ -149,11 +149,11 @@ void* gcl_Pair_at(gcl_Pair* p , int index , gcl_PairFlag flag)
     return (char*)object_addres + p->firstItemSize;
 }
 
-int gcl_Pair_length(gcl_Pair* p)
+int hrt_Pair_length(hrt_Pair* p)
 {
     return p->dArray->currentIdx;
 }
-int gcl_Pair_capacity(gcl_Pair* p)
+int hrt_Pair_capacity(hrt_Pair* p)
 {
     return p->dArray->capacity;
 }

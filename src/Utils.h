@@ -1,28 +1,28 @@
-#ifndef GCL_UTILS_H
-#define GCL_UTILS_H
+#ifndef HRT_UTILS_H
+#define HRT_UTILS_H
 
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct gcl_DynamicArray
+typedef struct hrt_DynamicArray
 {
     int capacity;
     int currentIdx;
     int elementSize;
     void* objectAddress;
 
-} gcl_DynamicArray;
+} hrt_DynamicArray;
 
 
-gcl_DynamicArray* gcl_DynamicArray_create(int sizeof_obj);
-void gcl_DynamicArray_pop(gcl_DynamicArray* da);
-void gcl_DynamicArray_push(gcl_DynamicArray* da , const void* src);
-void gcl_DynamicArray_resize(gcl_DynamicArray* da);
-void gcl_DynamicArray_destroy(gcl_DynamicArray* da);
+hrt_DynamicArray* hrt_DynamicArray_create(int sizeof_obj);
+void hrt_DynamicArray_pop(hrt_DynamicArray* da);
+void hrt_DynamicArray_push(hrt_DynamicArray* da , const void* src);
+void hrt_DynamicArray_resize(hrt_DynamicArray* da);
+void hrt_DynamicArray_destroy(hrt_DynamicArray* da);
 
-void* gcl_DynamicArray_at(gcl_DynamicArray* da , int index);
-int gcl_DynamicArray_length(gcl_DynamicArray* da);
-int gcl_DynamicArray_capacity(gcl_DynamicArray* da);
+void* hrt_DynamicArray_at(hrt_DynamicArray* da , int index);
+int hrt_DynamicArray_length(hrt_DynamicArray* da);
+int hrt_DynamicArray_capacity(hrt_DynamicArray* da);
 
 
 
@@ -30,49 +30,49 @@ typedef enum
 {
     FIRST       = 0 ,
     SECOND
-} gcl_PairFlag;
+} hrt_PairFlag;
 
-typedef struct gcl_Pair
+typedef struct hrt_Pair
 {
     int firstItemSize;
     int secondItemSize;
     int elementSize;
-    gcl_DynamicArray* dArray;
+    hrt_DynamicArray* dArray;
 
-} gcl_Pair;
+} hrt_Pair;
 
 
-gcl_Pair* gcl_Pair_create(int sizeof_first_item , int sizeof_second_item);
-void gcl_Pair_push(gcl_Pair* p , void* first_item , void* second_item);
-void gcl_Pair_pop(gcl_Pair* p);
-void gcl_Pair_destroy(gcl_Pair* p);
+hrt_Pair* hrt_Pair_create(int sizeof_first_item , int sizeof_second_item);
+void hrt_Pair_push(hrt_Pair* p , void* first_item , void* second_item);
+void hrt_Pair_pop(hrt_Pair* p);
+void hrt_Pair_destroy(hrt_Pair* p);
 
-void* gcl_Pair_at(gcl_Pair* p , int index , gcl_PairFlag flag);
-int gcl_Pair_length(gcl_Pair* p);
-int gcl_Pair_capacity(gcl_Pair* p);
+void* hrt_Pair_at(hrt_Pair* p , int index , hrt_PairFlag flag);
+int hrt_Pair_length(hrt_Pair* p);
+int hrt_Pair_capacity(hrt_Pair* p);
 
 
 //                  -- Stack --
 
-typedef struct gcl_Node
+typedef struct hrt_Node
 {
     
-} gcl_Node;
+} hrt_Node;
 
 
-typedef struct gcl_Stack
+typedef struct hrt_Stack
 {
 
-} gcl_Stack;
+} hrt_Stack;
 
 
-gcl_Pair* gcl_Stack_create(int sizeof_first_item , int sizeof_second_item);
-void gcl_Stack_push(gcl_Pair* p , void* first_item , void* second_item);
-void gcl_Stack_pop(gcl_Pair* p);
-void gcl_Stack_destroy(gcl_Pair* p);
+hrt_Pair* hrt_Stack_create(int sizeof_first_item , int sizeof_second_item);
+void hrt_Stack_push(hrt_Pair* p , void* first_item , void* second_item);
+void hrt_Stack_pop(hrt_Pair* p);
+void hrt_Stack_destroy(hrt_Pair* p);
 
-void* gcl_Pair_top(gcl_Pair* p , int index , gcl_PairFlag flag);
-int gcl_Stack_size(gcl_Pair* p);
+void* hrt_Pair_top(hrt_Pair* p , int index , hrt_PairFlag flag);
+int hrt_Stack_size(hrt_Pair* p);
 
 //                  -- Hashmap --
 
@@ -81,7 +81,7 @@ typedef struct
 {
     int keySize;
     int valueSize;
-} gcl_Hashmap;
+} hrt_Hashmap;
 */
 
 
@@ -97,7 +97,7 @@ typedef enum
 typedef struct
 {
     char** log;
-} gcl_Log;
+} hrt_Log;
 */
 
 

@@ -11,7 +11,7 @@ static void __textInput(GLFWwindow* window , unsigned int code_point)
 }
 
 
-bool gcl_isKeyPressed(KeyboardFlag keyboard_flag)
+bool hrt_isKeyPressed(KeyboardFlag keyboard_flag)
 {
     if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_PRESS)
         return true;
@@ -19,7 +19,7 @@ bool gcl_isKeyPressed(KeyboardFlag keyboard_flag)
     return false;
 }
 
-bool gcl_isKeyReleased(KeyboardFlag keyboard_flag)
+bool hrt_isKeyReleased(KeyboardFlag keyboard_flag)
 {
     if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_RELEASE)
         return true;
@@ -28,7 +28,7 @@ bool gcl_isKeyReleased(KeyboardFlag keyboard_flag)
 }
 
 
-void gcl_enableTextInput(char* ch_ptr , int current_string_length , int buffer_size)
+void hrt_enableTextInput(char* ch_ptr , int current_string_length , int buffer_size)
 {
     if (WINDOW.Keyboard.TIH.objectAddress == NULL || WINDOW.Keyboard.TIH.objectAddress != ch_ptr)
     {
@@ -46,7 +46,7 @@ void gcl_enableTextInput(char* ch_ptr , int current_string_length , int buffer_s
         }
 }
 
-void gcl_disableTextInput()
+void hrt_disableTextInput()
 {
     glfwSetCharCallback(WINDOW.GLFW_window , NULL);
 }

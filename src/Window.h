@@ -1,5 +1,5 @@
-#ifndef GCL_WINDOW_H
-#define GCL_WINDOW_H
+#ifndef HRT_WINDOW_H
+#define HRT_WINDOW_H
 
 #include "./Config.h"
 #include <stdio.h>
@@ -8,8 +8,8 @@
 #include <stdbool.h>
 
 
-// #ifndef GCL_WINDOW_ENABLE_WAIT_EVENTS
-//     #define  GCL_WINDOW_ENABLE_WAIT_EVENTS
+// #ifndef HRT_WINDOW_ENABLE_WAIT_EVENTS
+//     #define  HRT_WINDOW_ENABLE_WAIT_EVENTS
 // #endif
 
 
@@ -150,19 +150,19 @@ typedef struct TextInputHandler
 
 } TextInputHandler;
 
-typedef struct gcl_Keyboard
+typedef struct hrt_Keyboard
 {
     TextInputHandler TIH;
 
-} gcl_Keyboard;
+} hrt_Keyboard;
 
 
-bool gcl_isKeyPressed(KeyboardFlag keyboard_flag);
-bool gcl_isKeyReleased(KeyboardFlag keyboard_flag);
+bool hrt_isKeyPressed(KeyboardFlag keyboard_flag);
+bool hrt_isKeyReleased(KeyboardFlag keyboard_flag);
 
 
-void gcl_enableTextInput(char* ch_ptr , int string_length , int buffer_size);
-void gcl_disableTextInput();
+void hrt_enableTextInput(char* ch_ptr , int string_length , int buffer_size);
+void hrt_disableTextInput();
 
 
 //                      -- Mouse --
@@ -192,7 +192,7 @@ typedef enum
 } CursorFlag;
 
 
-typedef struct gcl_Mouse
+typedef struct hrt_Mouse
 {
     GLFWcursor* GLFW_cursor;
     CursorFlag cursorFlag;
@@ -200,58 +200,59 @@ typedef struct gcl_Mouse
     double x;
     double y;
 
-} gcl_Mouse;
+} hrt_Mouse;
 
 
-bool gcl_isMouseIn(gcl_Rect rect);
-bool gcl_isMousePressed(MouseFlag mouse_flag);
-bool gcl_isMouseReleased(MouseFlag mouse_flag);
-bool gcl_isMouseClicked(MouseFlag mouse_flag);
+bool hrt_isMouseIn(hrt_Rect rect);
+bool hrt_isMousePressed(MouseFlag mouse_flag);
+bool hrt_isMouseReleased(MouseFlag mouse_flag);
+bool hrt_isMouseClicked(MouseFlag mouse_flag);
 
 
-void gcl_setMouseCursor(CursorFlag cf);
+void hrt_setMouseCursor(CursorFlag cf);
 
 
-void gcl_enableMouseScrollMovement();
-void gcl_disableMouseScrollMovement();
+void hrt_enableMouseScrollMovement();
+void hrt_disableMouseScrollMovement();
 
 
-int gcl_getMousePosX();
-int gcl_getMousePosY();
-int gcl_getMouseWheelX();
-int gcl_getMouseWheelY();
+int hrt_getMousePosX();
+int hrt_getMousePosY();
+int hrt_getMouseWheelX();
+int hrt_getMouseWheelY();
 
 
-void gcl_destroyMouse();
+void hrt_destroyMouse();
 
 
 //                  -- RENDERER --
-void gcl_initRenderer();
+void hrt_initRenderer();
 
-void gcl_drawBackground(int r , int g , int b , int a);
+void hrt_drawBackground(int r , int g , int b , int a);
 
-unsigned int gcl_loadImage(const char* file_path);
-void gcl_drawImage(gcl_Rect rct , unsigned int index_to_draw);
-unsigned int gcl_loadEnglishFont(const char* font_path , unsigned int font_size);
-void gcl_drawEnglishText(gcl_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
-void __gcl_drawTextureAtlas(gcl_Rect rct);
+unsigned int hrt_loadImage(const char* file_path);
+void hrt_drawImage(hrt_Rect rct , unsigned int index_to_draw);
+unsigned int hrt_loadEnglishFont(const char* font_path , unsigned int font_size);
+void hrt_drawEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
+hrt_Size hrt_getEnglishTextSize(const char* text , unsigned int font_id);
+void __hrt_drawTextureAtlas(hrt_Rect rct);
 
-void gcl_drawTriangle(gcl_Pos point1 , gcl_Pos point2 , gcl_Pos point3 , int r , int g , int b);
-void gcl_drawFilledRectangle(gcl_Rect rect , int r , int g , int b);
-void gcl_drawCircle(gcl_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b);
-void gcl_drawFilledRoundedRectangle(gcl_Rect rect , int radius , int r , int g , int b);
+void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b);
+void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b);
+void hrt_drawCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b);
+void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g , int b);
 
-void gcl_drawLine(gcl_Pos point1 , gcl_Pos point2 , int r , int g , int b);
-void gcl_drawRectangle(gcl_Rect rect , int thickness , int r , int g , int b);
+void hrt_drawLine(hrt_Pos point1 , hrt_Pos point2 , int r , int g , int b);
+void hrt_drawRectangle(hrt_Rect rect , int thickness , int r , int g , int b);
 
-void gcl_drawPoint(gcl_Pos point1 , int r , int g , int b);
+void hrt_drawPoint(hrt_Pos point1 , int r , int g , int b);
 
-void gcl_beginScissor(gcl_Rect rect);
-void gcl_endScissor();
+void hrt_beginScissor(hrt_Rect rect);
+void hrt_endScissor();
 
-void gcl_updateFrame();
+void hrt_updateFrame();
 
-void gcl_destroyRenderer();
+void hrt_destroyRenderer();
 
 
 //                  -- WINDOW --
@@ -267,7 +268,7 @@ typedef enum
     WINDOW_TRANSPARENT              = 1 << 6        ,
 } WindowFlag;
 
-typedef struct gcl_Window
+typedef struct hrt_Window
 {
     // WINDOW PROPERTY
     int width , height , x , y;
@@ -281,35 +282,35 @@ typedef struct gcl_Window
     bool isWindowInitialized;
 
     // KEYBOARD
-    gcl_Keyboard Keyboard;
+    hrt_Keyboard Keyboard;
 
     // MOUSE
-    gcl_Mouse Mouse;
+    hrt_Mouse Mouse;
 
-} gcl_Window;
+} hrt_Window;
 
 
 // GLOBAL VARIABLES
-extern gcl_Window WINDOW;
+extern hrt_Window WINDOW;
 
 
-int gcl_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos);
+int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos);
 
-void gcl_setWindowOpacity(int alpha);
-void gcl_stopWindowRunning();
-void gcl_setWindowTitle(const char* new_window_name);
-
-
-int gcl_getWindowPosX();
-int gcl_getWindowPosY();
-int gcl_getWindowHeight();
-int gcl_getWindowWidth();
-
-bool gcl_isWindowRunning();
-void gcl_updateWindow();
+void hrt_setWindowOpacity(int alpha);
+void hrt_stopWindowRunning();
+void hrt_setWindowTitle(const char* new_window_name);
 
 
-void gcl_destroyWindow();
+int hrt_getWindowPosX();
+int hrt_getWindowPosY();
+int hrt_getWindowHeight();
+int hrt_getWindowWidth();
+
+bool hrt_isWindowRunning();
+void hrt_updateWindow();
+
+
+void hrt_destroyWindow();
 
 
 

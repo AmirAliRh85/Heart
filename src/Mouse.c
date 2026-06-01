@@ -12,7 +12,7 @@ static void __scrollCallback(GLFWwindow* window , double x_offset , double y_off
 }
 
 
-bool gcl_isMouseIn(gcl_Rect rect)
+bool hrt_isMouseIn(hrt_Rect rect)
 {
     if (WINDOW.Mouse.x >= rect.x && WINDOW.Mouse.x <= rect.x + rect.w && WINDOW.Mouse.y >= rect.y && WINDOW.Mouse.y <= rect.y + rect.h)
         return true;
@@ -20,7 +20,7 @@ bool gcl_isMouseIn(gcl_Rect rect)
     return false;
 }
 
-bool gcl_isMousePressed(MouseFlag mouse_flag)
+bool hrt_isMousePressed(MouseFlag mouse_flag)
 {
     if (mouse_flag == BUTTON_LEFT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
@@ -35,7 +35,7 @@ bool gcl_isMousePressed(MouseFlag mouse_flag)
     return false;
 }
 
-bool gcl_isMouseReleased(MouseFlag mouse_flag)
+bool hrt_isMouseReleased(MouseFlag mouse_flag)
 {
     if (mouse_flag == BUTTON_LEFT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
@@ -50,16 +50,16 @@ bool gcl_isMouseReleased(MouseFlag mouse_flag)
     return false;
 }
 
-bool gcl_isMouseClicked(MouseFlag mouse_flag)
+bool hrt_isMouseClicked(MouseFlag mouse_flag)
 {
     static bool button_left_is_released = true;
     static bool button_right_is_released = true;
     static bool button_middle_is_released = true;
     if (mouse_flag == BUTTON_LEFT)
     {
-        if (gcl_isMousePressed(BUTTON_LEFT) && button_left_is_released)
+        if (hrt_isMousePressed(BUTTON_LEFT) && button_left_is_released)
             button_left_is_released = false;
-        else if (gcl_isMouseReleased(BUTTON_LEFT) && !button_left_is_released)
+        else if (hrt_isMouseReleased(BUTTON_LEFT) && !button_left_is_released)
         {
             button_left_is_released = true;
             return true;
@@ -67,9 +67,9 @@ bool gcl_isMouseClicked(MouseFlag mouse_flag)
     }
     else if (mouse_flag == BUTTON_RIGHT)
     {
-        if (gcl_isMousePressed(BUTTON_RIGHT) && button_right_is_released)
+        if (hrt_isMousePressed(BUTTON_RIGHT) && button_right_is_released)
             button_right_is_released = false;
-        else if (gcl_isMouseReleased(BUTTON_RIGHT) && !button_right_is_released)
+        else if (hrt_isMouseReleased(BUTTON_RIGHT) && !button_right_is_released)
         {
             button_right_is_released = true;
             return true;
@@ -77,9 +77,9 @@ bool gcl_isMouseClicked(MouseFlag mouse_flag)
     }
     else if (mouse_flag == BUTTON_MIDDLE)
     {
-        if (gcl_isMousePressed(BUTTON_MIDDLE) && button_middle_is_released)
+        if (hrt_isMousePressed(BUTTON_MIDDLE) && button_middle_is_released)
             button_middle_is_released = false;
-        else if (gcl_isMouseReleased(BUTTON_MIDDLE) && !button_middle_is_released)
+        else if (hrt_isMouseReleased(BUTTON_MIDDLE) && !button_middle_is_released)
         {
             button_middle_is_released = true;
             return true;
@@ -89,7 +89,7 @@ bool gcl_isMouseClicked(MouseFlag mouse_flag)
 }
 
 
-void gcl_setMouseCursor(CursorFlag cf)
+void hrt_setMouseCursor(CursorFlag cf)
 {
     if (WINDOW.Mouse.cursorFlag != cf)
     {
@@ -139,17 +139,17 @@ void gcl_setMouseCursor(CursorFlag cf)
 }
 
 
-void gcl_enableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , __scrollCallback) ; }
-void gcl_disableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , NULL) ; }
+void hrt_enableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , __scrollCallback) ; }
+void hrt_disableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , NULL) ; }
 
 
-int gcl_getMousePosX() { return (int)WINDOW.Mouse.x ; }
-int gcl_getMousePosY() { return (int)WINDOW.Mouse.y ; }
-int gcl_getMouseWheelX() { return __offsetX ; }
-int gcl_getMouseWheelY() { return __offsetY ; }
+int hrt_getMousePosX() { return (int)WINDOW.Mouse.x ; }
+int hrt_getMousePosY() { return (int)WINDOW.Mouse.y ; }
+int hrt_getMouseWheelX() { return __offsetX ; }
+int hrt_getMouseWheelY() { return __offsetY ; }
 
 
-void gcl_destroyMouse()
+void hrt_destroyMouse()
 {
     if (WINDOW.Mouse.GLFW_cursor != NULL)
         glfwDestroyCursor(WINDOW.Mouse.GLFW_cursor);

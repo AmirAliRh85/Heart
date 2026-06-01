@@ -1,5 +1,5 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef HRT_CONFIG_H
+#define HRT_CONFIG_H
 
 #include "../external/glad/include/glad.h"
 #include <GLFW/glfw3.h>
@@ -20,39 +20,40 @@
  *      0.1.1       FIX : Placing English text and image rendering into dynamic batching
  *      0.1.2       FIX : text input
  *      0.1.3       ADD : Mouse Wheel
+ *      0.2.3       changing the codebase in C
  */
 
 typedef struct
 {
     int x;
     int y;
-} gcl_Vec2;
+} hrt_Vec2;
 
 typedef struct
 {
     double x;
     double y;
-} gcl_Vec2f;
+} hrt_Vec2f;
 
 typedef struct
 {
     float x;
     float y;
-} gcl_Pos;
+} hrt_Pos;
 
 typedef struct
 {
     int w;
     int h;
-} gcl_Size;
+} hrt_Size;
 
 typedef struct
 {
     float x , y;
     int w , h;
-} gcl_Rect;
+} hrt_Rect;
 
-inline void gcl_Rect_center(gcl_Rect* rct1 , gcl_Rect* rct2)
+inline void hrt_Rect_center(hrt_Rect* rct1 , hrt_Rect* rct2)
 {
     rct1->x = rct2->x + (rct2->w - rct1->w) / 2;
     rct1->y = rct2->y + (rct2->h - rct1->h) / 2;

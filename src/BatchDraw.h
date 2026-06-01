@@ -1,5 +1,5 @@
-#ifndef GCL_BATCHDRAW_H
-#define GCL_BATCHDRAW_H
+#ifndef HRT_BATCHDRAW_H
+#define HRT_BATCHDRAW_H
 
 #include "Config.h"
 #include "Utils.h"
@@ -39,14 +39,14 @@ typedef enum
     TEXTURE                         = 4     ,
     TEXT                            = 5     ,
     NONE                            = 0     ,
-} gcl_Shape;
+} hrt_Shape;
 
 
 typedef struct
 {
-    gcl_Vec2 currentPos;
+    hrt_Vec2 currentPos;
     int height;
-} gcl_Shelf;
+} hrt_Shelf;
 
 typedef struct
 {
@@ -54,25 +54,25 @@ typedef struct
     float height;
     bool isInitialized;                         // default is false
     int heightOccupied;                         // default is 0
-    gcl_DynamicArray* shelves;
+    hrt_DynamicArray* shelves;
     unsigned int currShelfIdx;
-} gcl_TextureAtlas;
+} hrt_TextureAtlas;
 
 
 typedef struct
 {
-    gcl_Vec2 bottomLeft;
-    gcl_Vec2 topRight;
-} gcl_Image;
+    hrt_Vec2 bottomLeft;
+    hrt_Vec2 topRight;
+} hrt_Image;
 
 typedef struct
 {
-    gcl_Vec2 size;
-    gcl_Vec2 bearing;
-    gcl_Vec2 bottomLeft;
-    gcl_Vec2 topRight;
+    hrt_Vec2 size;
+    hrt_Vec2 bearing;
+    hrt_Vec2 bottomLeft;
+    hrt_Vec2 topRight;
     signed long advanceX;
-} gcl_Character;
+} hrt_Character;
 
 typedef struct
 {
@@ -80,8 +80,8 @@ typedef struct
     int maxHeight;                              // default is 0
     int maxBearingY;                            // default is 0
     int maxUnderlineY;                          // default is 0
-    gcl_Pair* characters;                       // char, Characters
-} gcl_EnglishFont;
+    hrt_Pair* characters;                       // char, Characters
+} hrt_EnglishFont;
 
 
 typedef struct _Dynamic _Dynamic;
@@ -97,8 +97,8 @@ typedef struct
 
     int batch[256]                              ; // [shape , amount , shape , amount , scissor , shape , amount , texture , texture , ...]
     unsigned int currBatchIdx                   ;
-    gcl_Shape currBatchShape                    ;
-    gcl_Rect scissor[20]                        ;
+    hrt_Shape currBatchShape                    ;
+    hrt_Rect scissor[20]                        ;
     unsigned int currScissorIdx                 ;
 
     _Dynamic* Dynamic;
@@ -106,9 +106,9 @@ typedef struct
 
 
 
-void gcl_BatchDraw_init();
-void gcl_BatchDraw_setProgram(unsigned int prg);
-void gcl_BatchDraw_setProjection();
+void hrt_BatchDraw_init();
+void hrt_BatchDraw_setProgram(unsigned int prg);
+void hrt_BatchDraw_setProjection();
 
 
 // ======================================
@@ -136,37 +136,37 @@ struct _Dynamic
     unsigned int texUnit;
     unsigned int texID;
     
-    gcl_TextureAtlas* TA;
+    hrt_TextureAtlas* TA;
     
-    gcl_Image* image;
+    hrt_Image* image;
     unsigned int currImageIdx;
 
-    gcl_EnglishFont* EF;
+    hrt_EnglishFont* EF;
     unsigned int currEFIdx;
 };
 
 
-void gcl_BatchDraw_Dynamic_addPrimitive(float* arr , gcl_Shape shape);
+void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_Shape shape);
 
 
-unsigned int gcl_BatchDraw_Dynamic_loadImage(const char* file_path);
-void gcl_BatchDraw_Dynamic_addImage(float* arr , unsigned int target_index);
+unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path);
+void hrt_BatchDraw_Dynamic_addImage(float* arr , unsigned int target_index);
 
-unsigned int gcl_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsigned int font_size);
-void gcl_BatchDraw_Dynamic_addEnglishText(gcl_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
+unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsigned int font_size);
+void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
 
-gcl_Size gcl_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id);
+hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id);
 
-void gcl_BatchDraw_Dynamic_addTextureAtlas(float* arr); // It is used for testing
+void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr); // It is used for testing
 
 
-void gcl_BatchDraw_beginScissor(gcl_Rect rct);
-void gcl_BatchDraw_endScissor();
+void hrt_BatchDraw_beginScissor(hrt_Rect rct);
+void hrt_BatchDraw_endScissor();
 
-void gcl_BatchDraw_flush();
+void hrt_BatchDraw_flush();
 
-void gcl_BatchDraw_reset();
+void hrt_BatchDraw_reset();
 
-void gcl_BatchDraw_destroy();
+void hrt_BatchDraw_destroy();
 
 #endif

@@ -1,9 +1,9 @@
 #include "Window.h"
 
-gcl_Window WINDOW;
+hrt_Window WINDOW;
 
 
-int gcl_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos)
+int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos)
 {
     glfwInit();
 
@@ -69,32 +69,32 @@ int gcl_createWindow(int w , int h , const char* window_name , int wnd_flag , in
 
     WINDOW.Keyboard.TIH.objectAddress = NULL;
 
-    gcl_setMouseCursor(ARROW_CURSOR);
-    gcl_enableMouseScrollMovement();
+    hrt_setMouseCursor(ARROW_CURSOR);
+    hrt_enableMouseScrollMovement();
 
-    gcl_initRenderer();
+    hrt_initRenderer();
 
     return 0;
 }
 
-void gcl_setWindowOpacity(int alpha)
+void hrt_setWindowOpacity(int alpha)
 {
     if (WINDOW_TRANSPARENT & WINDOW.windowFlag)
     {
         glfwSetWindowOpacity(WINDOW.GLFW_window , alpha / 255.0f);
     }
 }
-void gcl_stopWindowRunning() { glfwSetWindowShouldClose(WINDOW.GLFW_window , 1) ; }
-void gcl_setWindowTitle(const char* new_window_name) { glfwSetWindowTitle(WINDOW.GLFW_window , new_window_name) ; }
+void hrt_stopWindowRunning() { glfwSetWindowShouldClose(WINDOW.GLFW_window , 1) ; }
+void hrt_setWindowTitle(const char* new_window_name) { glfwSetWindowTitle(WINDOW.GLFW_window , new_window_name) ; }
 
 
-int gcl_getWindowPosX() { return WINDOW.x ; }
-int gcl_getWindowPosY() { return WINDOW.y ; }
-int gcl_getWindowHeight() { return WINDOW.height ; }
-int gcl_getWindowWidth() { return WINDOW.width ; }
+int hrt_getWindowPosX() { return WINDOW.x ; }
+int hrt_getWindowPosY() { return WINDOW.y ; }
+int hrt_getWindowHeight() { return WINDOW.height ; }
+int hrt_getWindowWidth() { return WINDOW.width ; }
 
-bool gcl_isWindowRunning() { return !glfwWindowShouldClose(WINDOW.GLFW_window) ; }
-void gcl_updateWindow()
+bool hrt_isWindowRunning() { return !glfwWindowShouldClose(WINDOW.GLFW_window) ; }
+void hrt_updateWindow()
 {
     #ifdef GCL_WINDOW_ENABLE_WAIT_EVENTS
         glfwWaitEvents();
@@ -105,17 +105,17 @@ void gcl_updateWindow()
     #endif
 
 
-    gcl_updateFrame();
+    hrt_updateFrame();
 
     glfwGetCursorPos(WINDOW.GLFW_window , &WINDOW.Mouse.x , &WINDOW.Mouse.y);
     glfwGetWindowPos(WINDOW.GLFW_window , &WINDOW.x , &WINDOW.y);
 }
 
 
-void gcl_destroyWindow()
+void hrt_destroyWindow()
 { 
-    gcl_destroyMouse();
-    gcl_destroyRenderer();
+    hrt_destroyMouse();
+    hrt_destroyRenderer();
     glfwDestroyWindow(WINDOW.GLFW_window);
     glfwTerminate();
 }
