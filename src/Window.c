@@ -101,7 +101,7 @@ void hrt_updateWindow()
     #elif GCL_WINDOW_ENABLE_POLL_EVENTS
         glfwPollEvents();                       // should not be used with glfwWaitEvents()
     #else
-        glfwWaitEventsTimeout(1.0 / 60.0);      // It is set to 60 fps
+        glfwWaitEventsTimeout(1.0 / 45.0);      // It is set to 45 fps
     #endif
 
 

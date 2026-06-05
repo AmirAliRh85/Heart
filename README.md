@@ -1,2 +1,2 @@
-# GCL
-GUI Creator Library
+# Heart
+Heart is a window system manager and 

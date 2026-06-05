@@ -50,17 +50,40 @@ void hrt_drawImage(hrt_Rect rct , unsigned int index_to_draw)
 }
 
 
-unsigned int hrt_loadEnglishFont(const char* font_path , unsigned int font_size)
+unsigned int hrt_loadFont(const char* font_path , unsigned int font_size)
 {
     return hrt_BatchDraw_Dynamic_loadEnglishFont(font_path , font_size);
 }
 
-void hrt_drawEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b)
+void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b)
 {
     hrt_BatchDraw_Dynamic_addEnglishText(point , text , font_id , r , g , b);
 }
 
-hrt_Size hrt_getEnglishTextSize(const char* text , unsigned int font_id)
+// static __hrt_getTextIdxLower(const char* text , unsigned int font_id , int fixed_width)
+// {
+    
+// }
+
+void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b)
+{
+    int str_len = strlen(text);
+
+    hrt_Size size;
+    int offset = 0;
+    for (int i = 0 ; i < str_len ; i++)
+    {
+        size = hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(text + offset , font_id , i + 1 - offset);
+        if (size.w > fixed_width)
+        {
+            hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , i - offset , font_id , r , g , b);
+            offset = i + 1;
+            point.y += hrt_BatchDraw_Dynamic_getEnglishTextSize("a" , font_id).h;
+        }
+    }
+}
+
+hrt_Size hrt_getTextSize(const char* text , unsigned int font_id)
 {
     return hrt_BatchDraw_Dynamic_getEnglishTextSize(text , font_id);
 }
@@ -114,15 +137,16 @@ void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b)
     hrt_drawTriangle((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x , rect.y + rect.h} , (hrt_Pos){rect.x + rect.w , rect.y + rect.h} , r , g , b);
 }
 
-void hrt_drawCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b)
+void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b)
 {
     if (radius < 0 || (ending_degree > 360) || (ending_degree < starting_degree))
         return;
 
-    float segment = radius * 0.8f;
+    float segment = radius * 0.9f;
     if (radius <= 20)
         segment += 10;
 
+    // float segment = 100;
     float angle = 2 * PI / segment;
     float angle1 = DEG2RAD(starting_degree);
     float angle2 = angle1 + angle;
@@ -174,10 +198,10 @@ void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g ,
         hrt_drawFilledRectangle(up , r , g , b);
         hrt_drawFilledRectangle(middle , r , g , b);
         hrt_drawFilledRectangle(down , r , g , b);
-        hrt_drawCircle(top_left , radius , 90 , 180 , r , g , b);
-        hrt_drawCircle(top_right , radius , 0 , 90 , r , g , b);
-        hrt_drawCircle(bottom_left , radius , 180 , 270 , r , g , b);
-        hrt_drawCircle(bottom_right , radius , 270 , 360 , r , g , b);
+        hrt_drawFilledCircle(top_left , radius , 90 , 180 , r , g , b);
+        hrt_drawFilledCircle(top_right , radius , 0 , 90 , r , g , b);
+        hrt_drawFilledCircle(bottom_left , radius , 180 , 270 , r , g , b);
+        hrt_drawFilledCircle(bottom_right , radius , 270 , 360 , r , g , b);
     }
 }
 

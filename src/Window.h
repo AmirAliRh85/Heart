@@ -232,14 +232,15 @@ void hrt_drawBackground(int r , int g , int b , int a);
 
 unsigned int hrt_loadImage(const char* file_path);
 void hrt_drawImage(hrt_Rect rct , unsigned int index_to_draw);
-unsigned int hrt_loadEnglishFont(const char* font_path , unsigned int font_size);
-void hrt_drawEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
-hrt_Size hrt_getEnglishTextSize(const char* text , unsigned int font_id);
+unsigned int hrt_loadFont(const char* font_path , unsigned int font_size);
+void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
+void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b);
+hrt_Size hrt_getTextSize(const char* text , unsigned int font_id);
 void __hrt_drawTextureAtlas(hrt_Rect rct);
 
 void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b);
 void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b);
-void hrt_drawCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b);
+void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b);
 void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g , int b);
 
 void hrt_drawLine(hrt_Pos point1 , hrt_Pos point2 , int r , int g , int b);

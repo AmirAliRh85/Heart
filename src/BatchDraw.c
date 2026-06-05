@@ -20,6 +20,8 @@ static BatchDraw* CORE;
 
 static GLuint program;
 
+char* _textBuff;
+
 static const char* VERTEX_SHADER_SOURCE = "#version 330 core\n"
 "layout (location = 0) in vec2 aPos;\n"
 "layout (location = 1) in vec3 aColor;\n"
@@ -128,6 +130,10 @@ void hrt_BatchDraw_init()
 
     printf("================ GCL ================\n");
 
+
+    _textBuff = (char*)malloc(1024);
+
+
     CORE = (BatchDraw*)malloc(sizeof(BatchDraw));
     CORE->currBatchIdx = 0;
     CORE->currScissorIdx = 0;
@@ -136,13 +142,13 @@ void hrt_BatchDraw_init()
 
     CORE->Dynamic = (_Dynamic*)malloc(sizeof(_Dynamic));
     
-    CORE->Dynamic->vertexTriangle = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE);
+    CORE->Dynamic->vertexTriangle = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexTriangleIdx = 0;
     CORE->Dynamic->currVertexTriangleIdxInserted = 0;
-    CORE->Dynamic->vertexLine = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE);
+    CORE->Dynamic->vertexLine = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexLineIdx = 0;
     CORE->Dynamic->currVertexLineIdxInserted = 0;
-    CORE->Dynamic->vertexPoint = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT);
+    CORE->Dynamic->vertexPoint = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexPointIdx = 0;
     CORE->Dynamic->currVertexPointIdxInserted = 0;
 
@@ -254,6 +260,11 @@ void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_Shape shape)
 
     if (shape == TRIANGLE)
     {
+        if (CORE->Dynamic->currVertexTriangleIdx + (int)shape > MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE)
+        {
+            printf("Maximum size in vertex triangle exceeded!\n");
+            return;
+        }
         CORE->batch[CORE->currBatchIdx - 5]++;
         memcpy(CORE->Dynamic->vertexTriangle + CORE->Dynamic->currVertexTriangleIdx , arr , sizeof(float) * ((int)shape));
         CORE->Dynamic->currVertexTriangleIdx += (int)shape;
@@ -535,6 +546,14 @@ void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , uns
     }
 }
 
+void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b)
+{
+    mempcpy(_textBuff , text , len);
+    _textBuff[len] = '\0';
+
+    hrt_BatchDraw_Dynamic_addEnglishText(point , _textBuff , font_id , r , g , b);
+}
+
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id)
 {
     hrt_Size size = {0 , CORE->Dynamic->EF[font_id].maxBearingY + CORE->Dynamic->EF[font_id].maxUnderlineY};
@@ -561,6 +580,13 @@ hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned in
     return size;
 }
 
+hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned int font_id , int len)
+{
+    memcpy(_textBuff , text , len);
+    _textBuff[len] = '\0';
+
+    return hrt_BatchDraw_Dynamic_getEnglishTextSize(_textBuff , font_id);
+}
 
 void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr)
 {
@@ -638,17 +664,24 @@ static void debug()
     //     CORE->Dynamic->vertexDynamic[i + 5] , CORE->Dynamic->vertexDynamic[i + 6]);
 
     printf("============ Texture Info ===========\n");
-    printf("TextureID: %i\n" , CORE->Dynamic->texID);
-    printf("TextureUnit: %i\n" , CORE->Dynamic->texUnit);
-    printf("%0x\n" , CORE->Dynamic->EF[0].characters);
-    printf("%i\n" , CORE->Dynamic->EF[0].fontSize);
-    printf("%i\n" , CORE->Dynamic->EF[0].maxBearingY);
-    printf("%i\n" , CORE->Dynamic->EF[0].maxHeight);
-    printf("%i\n" , CORE->Dynamic->EF[0].maxUnderlineY);
-    for (int i = 0 ; i < hrt_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
+    if (CORE->Dynamic->TA->isInitialized)
     {
-        hrt_Shelf s = *(hrt_Shelf*)hrt_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
-        printf("shelf number %i: pos(%i , %i) , height(%i)\n" , i + 1 , s.currentPos.x , s.currentPos.y , s.height);
+        printf("TextureID: %i\n" , CORE->Dynamic->texID);
+        printf("TextureUnit: %i\n" , CORE->Dynamic->texUnit);
+        printf("%0x\n" , CORE->Dynamic->EF[0].characters);
+        printf("%i\n" , CORE->Dynamic->EF[0].fontSize);
+        printf("%i\n" , CORE->Dynamic->EF[0].maxBearingY);
+        printf("%i\n" , CORE->Dynamic->EF[0].maxHeight);
+        printf("%i\n" , CORE->Dynamic->EF[0].maxUnderlineY);
+        for (int i = 0 ; i < hrt_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
+        {
+            hrt_Shelf s = *(hrt_Shelf*)hrt_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
+            printf("shelf number %i: pos(%i , %i) , height(%i)\n" , i + 1 , s.currentPos.x , s.currentPos.y , s.height);
+        }
+    }
+    else
+    {
+        printf("Texture Atlas is not initialized\n");
     }
     printf("=====================================\n");
 }
@@ -754,6 +787,8 @@ void hrt_BatchDraw_destroy()
     glDeleteTextures(1 , &CORE->Dynamic->texID);
     glDeleteVertexArrays(1 , &CORE->vao);
     glDeleteBuffers(1 , &CORE->vbo);
+
+    free(_textBuff);
     
     free(CORE->Dynamic->vertexTriangle);
     free(CORE->Dynamic->vertexLine);

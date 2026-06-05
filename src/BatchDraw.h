@@ -12,9 +12,9 @@
 #define DEG2RAD(deg) (deg * PI / 180.0f)
 
 
-#define MAX_DYNAMIC_VERTEX_TRAINGLE     8192
-#define MAX_DYNAMIC_VERTEX_LINE         1024
-#define MAX_DYNAMIC_VERTEX_POINT        1024
+#define MAX_DYNAMIC_VERTEX_TRAINGLE     64768
+#define MAX_DYNAMIC_VERTEX_LINE         8096
+#define MAX_DYNAMIC_VERTEX_POINT        8096
 #define MAX_DYNAMIC_VERTEX              (MAX_DYNAMIC_VERTEX_TRAINGLE + MAX_DYNAMIC_VERTEX_LINE + MAX_DYNAMIC_VERTEX_POINT)
 
 #define VERTEX_ATTRIBUTE                7           // x , y , r , g , b , u , v
@@ -154,8 +154,10 @@ void hrt_BatchDraw_Dynamic_addImage(float* arr , unsigned int target_index);
 
 unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsigned int font_size);
 void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
+void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b);
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id);
+hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned int font_id , int len);
 
 void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr); // It is used for testing
 

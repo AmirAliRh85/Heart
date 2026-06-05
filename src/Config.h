@@ -15,12 +15,17 @@
 #define GCL_WARNING                 1
 
 /*
+ *      Name converntion for commits : (Heart x.y.z) TYPE : info
+ *
  *      0.0.0       Initial version
  *      0.1.0       ADD : rendering Text
  *      0.1.1       FIX : Placing English text and image rendering into dynamic batching
  *      0.1.2       FIX : text input
  *      0.1.3       ADD : Mouse Wheel
  *      0.2.3       changing the codebase in C
+ *      0.2.4       renaming project name and fixing text rendering
+ * 
+ *
  */
 
 typedef struct
