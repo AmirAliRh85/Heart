@@ -79,7 +79,7 @@ void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_
         if (size.w > fixed_width)
         {
             hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , i - offset , font_id , r , g , b);
-            offset = i + 1;
+            offset = i;
             point.y += hrt_BatchDraw_Dynamic_getEnglishTextSize("a" , font_id).h;
         }
     }

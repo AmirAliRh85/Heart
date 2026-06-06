@@ -4,15 +4,15 @@
 #include "../external/glad/include/glad.h"
 #include <GLFW/glfw3.h>
 
-#define GCL_MAJOR_VERSION   0
-#define GCL_MINOR_VERSION   1
-#define GCL_PATCH_VERSION   3
+#define HRT_MAJOR_VERSION   0
+#define HRT_MINOR_VERSION   3
+#define HRT_PATCH_VERSION   6
 
-#define GCL_VERSION         "0.1.3"
+#define HRT_VERSION         "0.3.6"
 
-#define GCL_OK                      0
-#define GCL_ERROR                   -1
-#define GCL_WARNING                 1
+#define HRT_OK                      0
+#define HRT_ERROR                   -1
+#define HRT_WARNING                 1
 
 /*
  *      Name converntion for commits : (Heart x.y.z) TYPE : info
