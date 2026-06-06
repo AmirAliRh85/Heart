@@ -68,6 +68,8 @@ void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int 
 void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b)
 {
     int str_len = strlen(text);
+    if (str_len == 0)
+        return;
 
     hrt_Size size;
     int offset = 0;
@@ -81,6 +83,8 @@ void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_
             point.y += hrt_BatchDraw_Dynamic_getEnglishTextSize("a" , font_id).h;
         }
     }
+    hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , str_len - offset , font_id , r , g , b);
+    
 }
 
 hrt_Size hrt_getTextSize(const char* text , unsigned int font_id)

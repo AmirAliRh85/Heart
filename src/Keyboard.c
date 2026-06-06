@@ -5,8 +5,8 @@
 
 static void __textInput(GLFWwindow* window , unsigned int code_point)
 {
-    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx - 1] = (char)code_point;
-    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx] = '\0';
+    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx] = (char)code_point;
+    WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx + 1] = '\0';
     WINDOW.Keyboard.TIH.currentIdx += 1;
 }
 
@@ -27,7 +27,7 @@ bool hrt_isKeyReleased(KeyboardFlag keyboard_flag)
     return false;
 }
 
-
+// not including '\0'
 void hrt_enableTextInput(char* ch_ptr , int current_string_length , int buffer_size)
 {
     if (WINDOW.Keyboard.TIH.objectAddress == NULL || WINDOW.Keyboard.TIH.objectAddress != ch_ptr)
@@ -38,12 +38,12 @@ void hrt_enableTextInput(char* ch_ptr , int current_string_length , int buffer_s
     }
 
     glfwSetCharCallback(WINDOW.GLFW_window , __textInput);
-    if (glfwGetKey(WINDOW.GLFW_window , GLFW_KEY_BACKSPACE) == GLFW_PRESS)
-        if (WINDOW.Keyboard.TIH.currentIdx > 1)
-        {
-            WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx - 2] = '\0';
-            WINDOW.Keyboard.TIH.currentIdx -= 1;
-        }
+    // if (glfwGetKey(WINDOW.GLFW_window , GLFW_KEY_BACKSPACE) == GLFW_PRESS)
+    //     if (WINDOW.Keyboard.TIH.currentIdx > 1)
+    //     {
+    //         WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx - 2] = '\0';
+    //         WINDOW.Keyboard.TIH.currentIdx -= 1;
+    //     }
 }
 
 void hrt_disableTextInput()

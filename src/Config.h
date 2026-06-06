@@ -24,6 +24,8 @@
  *      0.1.3       ADD : Mouse Wheel
  *      0.2.3       changing the codebase in C
  *      0.2.4       renaming project name and fixing text rendering
+ *      0.3.4       ADD : multiline text rendering
+ *      0.3.6       FIX : multiline text rendering and text input
  * 
  *
  */
