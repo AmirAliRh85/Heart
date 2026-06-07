@@ -26,6 +26,7 @@
  *      0.2.4       renaming project name and fixing text rendering
  *      0.3.4       ADD : multiline text rendering
  *      0.3.6       FIX : multiline text rendering and text input
+ *      0.3.7       ADD : alpha channel for drawing primitives
  * 
  *
  */
@@ -83,10 +84,10 @@ typedef struct
 } ColorRGB;
 
 
-#define RED         255 , 0 , 0
-#define GREEN       0 , 255 , 0
-#define BLUE        0 , 0 , 255
-#define WHITE       255 , 255 , 255
-#define BLACK       0 , 0 , 0
+#define RED         255 , 0 , 0 , 255
+#define GREEN       0 , 255 , 0 , 255
+#define BLUE        0 , 0 , 255 , 255
+#define WHITE       255 , 255 , 255 , 255
+#define BLACK       0 , 0 , 0 , 255
 
 #endif

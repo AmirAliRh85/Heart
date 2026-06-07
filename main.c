@@ -20,8 +20,8 @@ int main()
     {
         hrt_drawBackground(225 , 225 , 225 , 250);
 
-        hrt_drawFilledRoundedRectangle(rect , 6 , 165 , 165 , 165);
-        hrt_drawText(text_pos , t , font_id , 25 , 25 , 25);
+        hrt_drawFilledRoundedRectangle(rect , 6 , 165 , 165 , 165 , 255);
+        hrt_drawText(text_pos , t , font_id , 25 , 25 , 25 , 255);
 
         hrt_updateWindow();
     }

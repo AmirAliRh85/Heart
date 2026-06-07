@@ -37,13 +37,13 @@ void hrt_drawImage(hrt_Rect rct , unsigned int index_to_draw)
     hrt_Pos point3 = {rct.x , rct.y + rct.h};
     hrt_Pos point4 = {rct.x + rct.w , rct.y + rct.h};
     float temp[] = {
-        point1.x , point1.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
-        point2.x , point2.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
-        point4.x , point4.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point1.x , point1.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point2.x , point2.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point4.x , point4.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
 
-        point1.x , point1.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
-        point3.x , point3.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
-        point4.x , point4.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point1.x , point1.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point3.x , point3.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point4.x , point4.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
     };
 
     hrt_BatchDraw_Dynamic_addImage(temp , index_to_draw);
@@ -55,9 +55,9 @@ unsigned int hrt_loadFont(const char* font_path , unsigned int font_size)
     return hrt_BatchDraw_Dynamic_loadEnglishFont(font_path , font_size);
 }
 
-void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b)
+void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b , int a)
 {
-    hrt_BatchDraw_Dynamic_addEnglishText(point , text , font_id , r , g , b);
+    hrt_BatchDraw_Dynamic_addEnglishText(point , text , font_id , r , g , b , a);
 }
 
 // static __hrt_getTextIdxLower(const char* text , unsigned int font_id , int fixed_width)
@@ -65,7 +65,7 @@ void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int 
     
 // }
 
-void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b)
+void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b , int a)
 {
     int str_len = strlen(text);
     if (str_len == 0)
@@ -78,12 +78,12 @@ void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_
         size = hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(text + offset , font_id , i + 1 - offset);
         if (size.w > fixed_width)
         {
-            hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , i - offset , font_id , r , g , b);
+            hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , i - offset , font_id , r , g , b , a);
             offset = i;
             point.y += hrt_BatchDraw_Dynamic_getEnglishTextSize("a" , font_id).h;
         }
     }
-    hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , str_len - offset , font_id , r , g , b);
+    hrt_BatchDraw_Dynamic_addEnglishTextEx(point , text + offset , str_len - offset , font_id , r , g , b , a);
     
 }
 
@@ -101,13 +101,13 @@ void __hrt_drawTextureAtlas(hrt_Rect rct)
     hrt_Pos point3 = {rct.x , rct.y + rct.h};
     hrt_Pos point4 = {rct.x + rct.w , rct.y + rct.h};
     float arr[] = {
-        point1.x , point1.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 1.0f ,
-        point2.x , point2.y ,    1.0f , 1.0f , 1.0f ,   1.0f , 1.0f ,
-        point4.x , point4.y ,    1.0f , 1.0f , 1.0f ,   1.0f , 0.0f ,
+        point1.x , point1.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 1.0f ,
+        point2.x , point2.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   1.0f , 1.0f ,
+        point4.x , point4.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   1.0f , 0.0f ,
 
-        point1.x , point1.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 1.0f ,
-        point3.x , point3.y ,    1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
-        point4.x , point4.y ,    1.0f , 1.0f , 1.0f ,   1.0f , 0.0f ,
+        point1.x , point1.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 1.0f ,
+        point3.x , point3.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   0.0f , 0.0f ,
+        point4.x , point4.y ,    1.0f , 1.0f , 1.0f , 1.0f ,   1.0f , 0.0f ,
     };
 
     hrt_BatchDraw_Dynamic_addTextureAtlas(arr);
@@ -123,25 +123,25 @@ void hrt_drawBackground(int r , int g , int b , int a)
 }
 
 
-void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b)
+void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b , int a)
 {
-    float temp[21] = {
-        point1.x , point1.y , RGB_TO_GL(r , g , b) , -1.0f , -1.0f ,
-        point2.x , point2.y , RGB_TO_GL(r , g , b) , -1.0f , -1.0f ,
-        point3.x , point3.y , RGB_TO_GL(r , g , b) , -1.0f , -1.0f
+    float temp[] = {
+        point1.x , point1.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f ,
+        point2.x , point2.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f ,
+        point3.x , point3.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f
     };
 
     hrt_BatchDraw_Dynamic_addPrimitive(temp , TRIANGLE);
 
 }
 
-void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b)
+void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b , int a)
 {
-    hrt_drawTriangle((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x + rect.w , rect.y} , (hrt_Pos){rect.x + rect.w , rect.y + rect.h} , r , g , b);
-    hrt_drawTriangle((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x , rect.y + rect.h} , (hrt_Pos){rect.x + rect.w , rect.y + rect.h} , r , g , b);
+    hrt_drawTriangle((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x + rect.w , rect.y} , (hrt_Pos){rect.x + rect.w , rect.y + rect.h} , r , g , b , a);
+    hrt_drawTriangle((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x , rect.y + rect.h} , (hrt_Pos){rect.x + rect.w , rect.y + rect.h} , r , g , b , a);
 }
 
-void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b)
+void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , int ending_degree , int r , int g , int b , int a)
 {
     if (radius < 0 || (ending_degree > 360) || (ending_degree < starting_degree))
         return;
@@ -169,7 +169,7 @@ void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , in
         pos1.y = center.y - radius * sin(angle1);
         pos2.x = center.x + radius * cos(angle2);
         pos2.y = center.y - radius * sin(angle2);
-        hrt_drawTriangle(center , pos1 , pos2 , r , g , b);
+        hrt_drawTriangle(center , pos1 , pos2 , r , g , b , a);
         angle1 = angle2;
         angle2 += angle;
 
@@ -178,7 +178,7 @@ void hrt_drawFilledCircle(hrt_Pos center , int radius , int starting_degree , in
     }
 }
 
-void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g , int b)
+void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g , int b , int a)
 {
     if (radius > rect.h / 2)
     {
@@ -199,40 +199,40 @@ void hrt_drawFilledRoundedRectangle(hrt_Rect rect , int radius , int r , int g ,
         hrt_Pos bottom_left = {rect.x + radius , down.y};
         hrt_Pos bottom_right = {rect.x + radius + down.w , down.y};
 
-        hrt_drawFilledRectangle(up , r , g , b);
-        hrt_drawFilledRectangle(middle , r , g , b);
-        hrt_drawFilledRectangle(down , r , g , b);
-        hrt_drawFilledCircle(top_left , radius , 90 , 180 , r , g , b);
-        hrt_drawFilledCircle(top_right , radius , 0 , 90 , r , g , b);
-        hrt_drawFilledCircle(bottom_left , radius , 180 , 270 , r , g , b);
-        hrt_drawFilledCircle(bottom_right , radius , 270 , 360 , r , g , b);
+        hrt_drawFilledRectangle(up , r , g , b , a);
+        hrt_drawFilledRectangle(middle , r , g , b , a);
+        hrt_drawFilledRectangle(down , r , g , b , a);
+        hrt_drawFilledCircle(top_left , radius , 90 , 180 , r , g , b , a);
+        hrt_drawFilledCircle(top_right , radius , 0 , 90 , r , g , b , a);
+        hrt_drawFilledCircle(bottom_left , radius , 180 , 270 , r , g , b , a);
+        hrt_drawFilledCircle(bottom_right , radius , 270 , 360 , r , g , b , a);
     }
 }
 
 
-void hrt_drawLine(hrt_Pos point1 , hrt_Pos point2 , int r , int g , int b)
+void hrt_drawLine(hrt_Pos point1 , hrt_Pos point2 , int r , int g , int b , int a)
 {
-    float temp[14] = {
-        point1.x + 0.5f , point1.y + 0.5f , RGB_TO_GL(r , g , b) , -1.0f , -1.0f ,
-        point2.x + 0.5f , point2.y + 0.5f , RGB_TO_GL(r , g , b) , -1.0f , -1.0f
+    float temp[] = {
+        point1.x + 0.5f , point1.y + 0.5f , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f ,
+        point2.x + 0.5f , point2.y + 0.5f , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f
     };
 
     hrt_BatchDraw_Dynamic_addPrimitive(temp , LINE);
 }
 
-void hrt_drawRectangle(hrt_Rect rect , int thickness , int r , int g , int b)
+void hrt_drawRectangle(hrt_Rect rect , int thickness , int r , int g , int b , int a)
 {
-    hrt_drawLine((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x + rect.w - 1, rect.y} , r , g , b);
-    hrt_drawLine((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x , rect.y + rect.h - 1} , r , g , b);
-    hrt_drawLine((hrt_Pos){rect.x , rect.y + rect.h - 1} , (hrt_Pos){rect.x + rect.w - 1 , rect.y + rect.h - 1} , r , g , b);
-    hrt_drawLine((hrt_Pos){rect.x + rect.w - 1, rect.y} , (hrt_Pos){rect.x + rect.w -1 , rect.y + rect.h - 1} , r , g , b);
+    hrt_drawLine((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x + rect.w - 1, rect.y} , r , g , b , a);
+    hrt_drawLine((hrt_Pos){rect.x , rect.y} , (hrt_Pos){rect.x , rect.y + rect.h - 1} , r , g , b , a);
+    hrt_drawLine((hrt_Pos){rect.x , rect.y + rect.h - 1} , (hrt_Pos){rect.x + rect.w - 1 , rect.y + rect.h - 1} , r , g , b , a);
+    hrt_drawLine((hrt_Pos){rect.x + rect.w - 1, rect.y} , (hrt_Pos){rect.x + rect.w -1 , rect.y + rect.h - 1} , r , g , b , a);
 }
 
 // It's recommended to not be used (it is deprecated)
-void hrt_drawPoint(hrt_Pos point1 , int r , int g , int b)
+void hrt_drawPoint(hrt_Pos point1 , int r , int g , int b , int a)
 {
-    float temp[7] = {
-        point1.x , point1.y , RGB_TO_GL(r , g , b) , -1.0f , -1.0f
+    float temp[] = {
+        point1.x , point1.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f
     };
 
     hrt_BatchDraw_Dynamic_addPrimitive(temp , POINT);

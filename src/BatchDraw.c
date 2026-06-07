@@ -5,8 +5,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#define HRT_MAX(a , b)  ((a) > (b) ? (a) : (b))
-#define DEBUG_SEP       37
+#define HRT_MAX(a , b)      ((a) > (b) ? (a) : (b))
+#define DEBUG_SEP_LENGTH    37
 
 /*
 *   BatchDraw Initialization
@@ -24,10 +24,10 @@ char* _textBuff;
 
 static const char* VERTEX_SHADER_SOURCE = "#version 330 core\n"
 "layout (location = 0) in vec2 aPos;\n"
-"layout (location = 1) in vec3 aColor;\n"
+"layout (location = 1) in vec4 aColor;\n"
 "layout (location = 2) in vec2 aUV;\n"
 "uniform mat4 projection;\n"
-"out vec3 color;\n"
+"out vec4 color;\n"
 "out vec2 UV;\n"
 "void main()\n"
 "{\n"
@@ -38,19 +38,19 @@ static const char* VERTEX_SHADER_SOURCE = "#version 330 core\n"
 
 static const char* FRAGMENT_SHADER_SOURCE = "#version 330 core\n"
 "out vec4 FragColor;\n"
-"in vec3 color;\n"
+"in vec4 color;\n"
 "in vec2 UV;\n"
 "uniform sampler2D tex0;\n"
 "void main()\n"
 "{\n"
 "   if (UV.x < 0)\n"
-"       FragColor = vec4(color , 1.0f);\n"
+"       FragColor = color;\n"
 "   else\n"
 "   {\n"
 "       vec4 texColor = texture(tex0, UV);\n"
 "       if (texColor.a < 0.05f)\n"
 "           discard;\n"
-"       FragColor = texColor * vec4(color , 1.0f);\n"
+"       FragColor = texColor * color;\n"
 "   }\n"
 "}\n";
 
@@ -188,9 +188,9 @@ void hrt_BatchDraw_init()
     glBufferData(GL_ARRAY_BUFFER , sizeof(float) * VERTEX_ATTRIBUTE * MAX_DYNAMIC_VERTEX , NULL , GL_DYNAMIC_DRAW);
     glVertexAttribPointer(0 , 2 , GL_FLOAT , GL_FALSE , sizeof(float) * VERTEX_ATTRIBUTE , (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1 , 3 , GL_FLOAT , GL_FALSE , sizeof(float) * VERTEX_ATTRIBUTE , (void*)(sizeof(float) * 2));
+    glVertexAttribPointer(1 , 4 , GL_FLOAT , GL_FALSE , sizeof(float) * VERTEX_ATTRIBUTE , (void*)(sizeof(float) * 2));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2 , 2 , GL_FLOAT , GL_FALSE , sizeof(float) * VERTEX_ATTRIBUTE , (void*)(sizeof(float) * 5));
+    glVertexAttribPointer(2 , 2 , GL_FLOAT , GL_FALSE , sizeof(float) * VERTEX_ATTRIBUTE , (void*)(sizeof(float) * 6));
     glEnableVertexAttribArray(2);
 
     
@@ -375,7 +375,7 @@ void hrt_BatchDraw_Dynamic_addImage(float* arr , unsigned int target_index)
     arr[40] = U2    ; arr[41] =  V1    ;
 
     hrt_BatchDraw_Dynamic_addPrimitive(arr , TRIANGLE);
-    hrt_BatchDraw_Dynamic_addPrimitive(arr + 21 , TRIANGLE);
+    hrt_BatchDraw_Dynamic_addPrimitive(arr + (int)TRIANGLE , TRIANGLE);
 }
 
 
@@ -496,7 +496,7 @@ unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsig
     return CORE->Dynamic->currEFIdx - 1;
 }
 
-void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b)
+void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b , int a)
 {
     char c;
     int x_pos , y_pos;
@@ -529,29 +529,29 @@ void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , uns
         hrt_Pos point3 = {x_pos , y_pos + ch.size.y};
         hrt_Pos point4 = {x_pos + ch.size.x , y_pos + ch.size.y};
         float arr[] = {
-            point1.x , point1.y ,    RGB_TO_GL(r , g , b) ,   U1 , V1 ,
-            point2.x , point2.y ,    RGB_TO_GL(r , g , b) ,   U2 , V1 ,
-            point4.x , point4.y ,    RGB_TO_GL(r , g , b) ,   U2 , V2 ,
+            point1.x , point1.y ,    RGBA_TO_GL(r , g , b , a) ,   U1 , V1 ,
+            point2.x , point2.y ,    RGBA_TO_GL(r , g , b , a) ,   U2 , V1 ,
+            point4.x , point4.y ,    RGBA_TO_GL(r , g , b , a) ,   U2 , V2 ,
 
-            point1.x , point1.y ,    RGB_TO_GL(r , g , b) ,   U1 , V1 ,
-            point3.x , point3.y ,    RGB_TO_GL(r , g , b) ,   U1 , V2 ,
-            point4.x , point4.y ,    RGB_TO_GL(r , g , b) ,   U2 , V2 ,
+            point1.x , point1.y ,    RGBA_TO_GL(r , g , b , a) ,   U1 , V1 ,
+            point3.x , point3.y ,    RGBA_TO_GL(r , g , b , a) ,   U1 , V2 ,
+            point4.x , point4.y ,    RGBA_TO_GL(r , g , b , a) ,   U2 , V2 ,
         };
 
         hrt_BatchDraw_Dynamic_addPrimitive(arr , TRIANGLE);
-        hrt_BatchDraw_Dynamic_addPrimitive(arr + 21 , TRIANGLE);
+        hrt_BatchDraw_Dynamic_addPrimitive(arr + (int)TRIANGLE , TRIANGLE);
 
         x += ch.advanceX;
         text++;
     }
 }
 
-void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b)
+void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b , int a)
 {
     mempcpy(_textBuff , text , len);
     _textBuff[len] = '\0';
 
-    hrt_BatchDraw_Dynamic_addEnglishText(point , _textBuff , font_id , r , g , b);
+    hrt_BatchDraw_Dynamic_addEnglishText(point , _textBuff , font_id , r , g , b , a);
 }
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id)
@@ -591,7 +591,7 @@ hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned 
 void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr)
 {
     hrt_BatchDraw_Dynamic_addPrimitive(arr , TRIANGLE);
-    hrt_BatchDraw_Dynamic_addPrimitive(arr + 21 , TRIANGLE);
+    hrt_BatchDraw_Dynamic_addPrimitive(arr + (int)TRIANGLE , TRIANGLE);
 }
 
 // ============================================================================================================================
@@ -779,7 +779,6 @@ void hrt_BatchDraw_reset()
     
     CORE->Dynamic->currVertexDynamicIdx = 0;
 
-    // CORE->Static->currVertexStaticTextureIdx = 0;
 }
 
 void hrt_BatchDraw_destroy()
@@ -802,8 +801,6 @@ void hrt_BatchDraw_destroy()
     free(CORE->Dynamic);
     free(CORE);
 
-    // Dynamic.image;
-    // Dynamic.EF;
 
     glDeleteProgram(program);
 }

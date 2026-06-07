@@ -17,7 +17,7 @@
 #define MAX_DYNAMIC_VERTEX_POINT        8096
 #define MAX_DYNAMIC_VERTEX              (MAX_DYNAMIC_VERTEX_TRAINGLE + MAX_DYNAMIC_VERTEX_LINE + MAX_DYNAMIC_VERTEX_POINT)
 
-#define VERTEX_ATTRIBUTE                7           // x , y , r , g , b , u , v
+#define VERTEX_ATTRIBUTE                8           // x , y , r , g , b , a , u , v
 
 #define ATLAS_WIDTH                     1024.0f
 #define ATLAS_HEIGHT                    1024.0f
@@ -29,9 +29,9 @@
 
 typedef enum
 {
-    TRIANGLE                        = 21    ,
-    LINE                            = 14    ,
-    POINT                           = 7     ,
+    TRIANGLE                        = 24    ,
+    LINE                            = 16    ,
+    POINT                           = 8     ,
     RECTANGLE                       = 42    ,
     BEGIN_SCISSOR                   = 1     ,
     END_SCISSOR                     = 2     ,
@@ -116,9 +116,9 @@ void hrt_BatchDraw_setProjection();
 struct _Dynamic
 {
     // pointer to end of the vertex also includes the attributes for example for a triangle we have :
-    // vertexTraingle = { x1 , y1 , r1 , g1 , b1 , -1 , -1 , 
-    //                    x2 , y2 , r2 , g2 , b2 , -1 , -1 , 
-    //                    x3 , y3 , r3 , g3 , b3 , -1 , -1 }
+    // vertexTraingle = { x1 , y1 , r1 , g1 , b1 , a1 , -1 , -1 , 
+    //                    x2 , y2 , r2 , g2 , b2 , a2 , -1 , -1 , 
+    //                    x3 , y3 , r3 , g3 , b3 , a3 , -1 , -1 }
     float* vertexTriangle                       ;
     unsigned int currVertexTriangleIdx          ;
     unsigned int currVertexTriangleIdxInserted  ;
@@ -153,8 +153,8 @@ unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path);
 void hrt_BatchDraw_Dynamic_addImage(float* arr , unsigned int target_index);
 
 unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsigned int font_size);
-void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b);
-void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b);
+void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b , int a);
+void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b , int a);
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id);
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned int font_id , int len);
