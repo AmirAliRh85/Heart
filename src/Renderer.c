@@ -91,7 +91,14 @@ hrt_Size hrt_getTextSize(const char* text , unsigned int font_id)
 {
     return hrt_BatchDraw_Dynamic_getEnglishTextSize(text , font_id);
 }
-
+int hrt_getTextWidth(const char* text , unsigned int font_id)
+{
+    return hrt_BatchDraw_Dynamic_getEnglishTextWidth(text , font_id);
+}
+int hrt_getTextHeight(unsigned int font_id)
+{
+    return hrt_BatchDraw_Dynamic_getEnglishTextHeight(font_id);
+}
 
 
 void __hrt_drawTextureAtlas(hrt_Rect rct)

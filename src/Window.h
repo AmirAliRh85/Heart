@@ -17,148 +17,148 @@
 
 typedef enum
 {
-    KEY_SPACE              =    32 ,
-    KEY_APOSTROPHE         =    39 , /* ' */
-    KEY_COMMA              =    44 , /* , */
-    KEY_MINUS              =    45 , /* - */
-    KEY_PERIOD             =    46 , /* . */
-    KEY_SLASH              =    47 , /* / */
-    KEY_0                  =    48 ,
-    KEY_1                  =    49 ,
-    KEY_2                  =    50 ,
-    KEY_3                  =    51 ,
-    KEY_4                  =    52 ,
-    KEY_5                  =    53 ,
-    KEY_6                  =    54 ,
-    KEY_7                  =    55 ,
-    KEY_8                  =    56 ,
-    KEY_9                  =    57 ,
-    KEY_SEMICOLON          =    59 , /* ; */
-    KEY_EQUAL              =    61 , /* = */
-    KEY_A                  =    65 ,
-    KEY_B                  =    66 ,
-    KEY_C                  =    67 ,
-    KEY_D                  =    68 ,
-    KEY_E                  =    69 ,
-    KEY_F                  =    70 ,
-    KEY_G                  =    71 ,
-    KEY_H                  =    72 ,
-    KEY_I                  =    73 ,
-    KEY_J                  =    74 ,
-    KEY_K                  =    75 ,
-    KEY_L                  =    76 ,
-    KEY_M                  =    77 ,
-    KEY_N                  =    78 ,
-    KEY_O                  =    79 ,
-    KEY_P                  =    80 ,
-    KEY_Q                  =    81 ,
-    KEY_R                  =    82 ,
-    KEY_S                  =    83 ,
-    KEY_T                  =    84 ,
-    KEY_U                  =    85 ,
-    KEY_V                  =    86 ,
-    KEY_W                  =    87 ,
-    KEY_X                  =    88 ,
-    KEY_Y                  =    89 ,
-    KEY_Z                  =    90 ,
-    KEY_LEFT_BRACKET       =    91 , /* [ */
-    KEY_BACKSLASH          =    92 , /* \ */
-    KEY_RIGHT_BRACKET      =    93 , /* ] */
-    KEY_GRAVE_ACCENT       =    96 , /* ` */
-    KEY_WORLD_1            =    161, /* non-US #1 */
-    KEY_WORLD_2            =    162, /* non-US #2 */
+    HRT_KEY_SPACE              =    32 ,
+    HRT_KEY_APOSTROPHE         =    39 , /* ' */
+    HRT_KEY_COMMA              =    44 , /* , */
+    HRT_KEY_MINUS              =    45 , /* - */
+    HRT_KEY_PERIOD             =    46 , /* . */
+    HRT_KEY_SLASH              =    47 , /* / */
+    HRT_KEY_0                  =    48 ,
+    HRT_KEY_1                  =    49 ,
+    HRT_KEY_2                  =    50 ,
+    HRT_KEY_3                  =    51 ,
+    HRT_KEY_4                  =    52 ,
+    HRT_KEY_5                  =    53 ,
+    HRT_KEY_6                  =    54 ,
+    HRT_KEY_7                  =    55 ,
+    HRT_KEY_8                  =    56 ,
+    HRT_KEY_9                  =    57 ,
+    HRT_KEY_SEMICOLON          =    59 , /* ; */
+    HRT_KEY_EQUAL              =    61 , /* = */
+    HRT_KEY_A                  =    65 ,
+    HRT_KEY_B                  =    66 ,
+    HRT_KEY_C                  =    67 ,
+    HRT_KEY_D                  =    68 ,
+    HRT_KEY_E                  =    69 ,
+    HRT_KEY_F                  =    70 ,
+    HRT_KEY_G                  =    71 ,
+    HRT_KEY_H                  =    72 ,
+    HRT_KEY_I                  =    73 ,
+    HRT_KEY_J                  =    74 ,
+    HRT_KEY_K                  =    75 ,
+    HRT_KEY_L                  =    76 ,
+    HRT_KEY_M                  =    77 ,
+    HRT_KEY_N                  =    78 ,
+    HRT_KEY_O                  =    79 ,
+    HRT_KEY_P                  =    80 ,
+    HRT_KEY_Q                  =    81 ,
+    HRT_KEY_R                  =    82 ,
+    HRT_KEY_S                  =    83 ,
+    HRT_KEY_T                  =    84 ,
+    HRT_KEY_U                  =    85 ,
+    HRT_KEY_V                  =    86 ,
+    HRT_KEY_W                  =    87 ,
+    HRT_KEY_X                  =    88 ,
+    HRT_KEY_Y                  =    89 ,
+    HRT_KEY_Z                  =    90 ,
+    HRT_KEY_LEFT_BRACKET       =    91 , /* [ */
+    HRT_KEY_BACKSLASH          =    92 , /* \ */
+    HRT_KEY_RIGHT_BRACKET      =    93 , /* ] */
+    HRT_KEY_GRAVE_ACCENT       =    96 , /* ` */
+    HRT_KEY_WORLD_1            =    161, /* non-US #1 */
+    HRT_KEY_WORLD_2            =    162, /* non-US #2 */
 
     // Function Keys
-    KEY_ESCAPE             =    256,
-    KEY_ENTER              =    257,
-    KEY_TAB                =    258,
-    KEY_BACKSPACE          =    259,
-    KEY_INSERT             =    260,
-    KEY_DELETE             =    261,
-    KEY_RIGHT              =    262,
-    KEY_LEFT               =    263,
-    KEY_DOWN               =    264,
-    KEY_UP                 =    265,
-    KEY_PAGE_UP            =    266,
-    KEY_PAGE_DOWN          =    267,
-    KEY_HOME               =    268,
-    KEY_END                =    269,
-    KEY_CAPS_LOCK          =    280,
-    KEY_SCROLL_LOCK        =    281,
-    KEY_NUM_LOCK           =    282,
-    KEY_PRINT_SCREEN       =    283,
-    KEY_PAUSE              =    284,
-    KEY_F1                 =    290,
-    KEY_F2                 =    291,
-    KEY_F3                 =    292,
-    KEY_F4                 =    293,
-    KEY_F5                 =    294,
-    KEY_F6                 =    295,
-    KEY_F7                 =    296,
-    KEY_F8                 =    297,
-    KEY_F9                 =    298,
-    KEY_F10                =    299,
-    KEY_F11                =    300,
-    KEY_F12                =    301,
-    KEY_F13                =    302,
-    KEY_F14                =    303,
-    KEY_F15                =    304,
-    KEY_F16                =    305,
-    KEY_F17                =    306,
-    KEY_F18                =    307,
-    KEY_F19                =    308,
-    KEY_F20                =    309,
-    KEY_F21                =    310,
-    KEY_F22                =    311,
-    KEY_F23                =    312,
-    KEY_F24                =    313,
-    KEY_F25                =    314,
-    KEY_KP_0               =    320,
-    KEY_KP_1               =    321,
-    KEY_KP_2               =    322,
-    KEY_KP_3               =    323,
-    KEY_KP_4               =    324,
-    KEY_KP_5               =    325,
-    KEY_KP_6               =    326,
-    KEY_KP_7               =    327,
-    KEY_KP_8               =    328,
-    KEY_KP_9               =    329,
-    KEY_KP_DECIMAL         =    330,
-    KEY_KP_DIVIDE          =    331,
-    KEY_KP_MULTIPLY        =    332,
-    KEY_KP_SUBTRACT        =    333,
-    KEY_KP_ADD             =    334,
-    KEY_KP_ENTER           =    335,
-    KEY_KP_EQUAL           =    336,
-    KEY_LEFT_SHIFT         =    340,
-    KEY_LEFT_CONTROL       =    341,
-    KEY_LEFT_ALT           =    342,
-    KEY_LEFT_SUPER         =    343,
-    KEY_RIGHT_SHIFT        =    344,
-    KEY_RIGHT_CONTROL      =    345,
-    KEY_RIGHT_ALT          =    346,
-    KEY_RIGHT_SUPER        =    347,
-    KEY_MENU               =    348,
-} KeyboardFlag;
+    HRT_KEY_ESCAPE             =    256,
+    HRT_KEY_ENTER              =    257,
+    HRT_KEY_TAB                =    258,
+    HRT_KEY_BACKSPACE          =    259,
+    HRT_KEY_INSERT             =    260,
+    HRT_KEY_DELETE             =    261,
+    HRT_KEY_RIGHT              =    262,
+    HRT_KEY_LEFT               =    263,
+    HRT_KEY_DOWN               =    264,
+    HRT_KEY_UP                 =    265,
+    HRT_KEY_PAGE_UP            =    266,
+    HRT_KEY_PAGE_DOWN          =    267,
+    HRT_KEY_HOME               =    268,
+    HRT_KEY_END                =    269,
+    HRT_KEY_CAPS_LOCK          =    280,
+    HRT_KEY_SCROLL_LOCK        =    281,
+    HRT_KEY_NUM_LOCK           =    282,
+    HRT_KEY_PRINT_SCREEN       =    283,
+    HRT_KEY_PAUSE              =    284,
+    HRT_KEY_F1                 =    290,
+    HRT_KEY_F2                 =    291,
+    HRT_KEY_F3                 =    292,
+    HRT_KEY_F4                 =    293,
+    HRT_KEY_F5                 =    294,
+    HRT_KEY_F6                 =    295,
+    HRT_KEY_F7                 =    296,
+    HRT_KEY_F8                 =    297,
+    HRT_KEY_F9                 =    298,
+    HRT_KEY_F10                =    299,
+    HRT_KEY_F11                =    300,
+    HRT_KEY_F12                =    301,
+    HRT_KEY_F13                =    302,
+    HRT_KEY_F14                =    303,
+    HRT_KEY_F15                =    304,
+    HRT_KEY_F16                =    305,
+    HRT_KEY_F17                =    306,
+    HRT_KEY_F18                =    307,
+    HRT_KEY_F19                =    308,
+    HRT_KEY_F20                =    309,
+    HRT_KEY_F21                =    310,
+    HRT_KEY_F22                =    311,
+    HRT_KEY_F23                =    312,
+    HRT_KEY_F24                =    313,
+    HRT_KEY_F25                =    314,
+    HRT_KEY_KP_0               =    320,
+    HRT_KEY_KP_1               =    321,
+    HRT_KEY_KP_2               =    322,
+    HRT_KEY_KP_3               =    323,
+    HRT_KEY_KP_4               =    324,
+    HRT_KEY_KP_5               =    325,
+    HRT_KEY_KP_6               =    326,
+    HRT_KEY_KP_7               =    327,
+    HRT_KEY_KP_8               =    328,
+    HRT_KEY_KP_9               =    329,
+    HRT_KEY_KP_DECIMAL         =    330,
+    HRT_KEY_KP_DIVIDE          =    331,
+    HRT_KEY_KP_MULTIPLY        =    332,
+    HRT_KEY_KP_SUBTRACT        =    333,
+    HRT_KEY_KP_ADD             =    334,
+    HRT_KEY_KP_ENTER           =    335,
+    HRT_KEY_KP_EQUAL           =    336,
+    HRT_KEY_LEFT_SHIFT         =    340,
+    HRT_KEY_LEFT_CONTROL       =    341,
+    HRT_KEY_LEFT_ALT           =    342,
+    HRT_KEY_LEFT_SUPER         =    343,
+    HRT_KEY_RIGHT_SHIFT        =    344,
+    HRT_KEY_RIGHT_CONTROL      =    345,
+    HRT_KEY_RIGHT_ALT          =    346,
+    HRT_KEY_RIGHT_SUPER        =    347,
+    HRT_KEY_MENU               =    348,
+} hrt_KeyboardFlag;
 
 
-typedef struct TextInputHandler
+typedef struct hrt_TextInputHandler
 {
     char* objectAddress;
     int currentIdx;         // including '\0'
     int bufferSize;         // including '\0'    
 
-} TextInputHandler;
+} hrt_TextInputHandler;
 
 typedef struct hrt_Keyboard
 {
-    TextInputHandler TIH;
+    hrt_TextInputHandler TIH;
 
 } hrt_Keyboard;
 
 
-bool hrt_isKeyPressed(KeyboardFlag keyboard_flag);
-bool hrt_isKeyReleased(KeyboardFlag keyboard_flag);
+bool hrt_isKeyPressed(hrt_KeyboardFlag keyboard_flag);
+bool hrt_isKeyReleased(hrt_KeyboardFlag keyboard_flag);
 
 
 void hrt_enableTextInput(char* ch_ptr , int string_length , int buffer_size);
@@ -169,33 +169,33 @@ void hrt_disableTextInput();
 
 typedef enum
 {
-    BUTTON_LEFT             ,
-    BUTTON_RIGHT            ,
-    BUTTON_MIDDLE           ,
-} MouseFlag;
+    HRT_BUTTON_LEFT             ,
+    HRT_BUTTON_RIGHT            ,
+    HRT_BUTTON_MIDDLE           ,
+} hrt_MouseFlag;
 
 typedef enum
 {
-    HAND_CURSOR             ,
-    POINTING_HAND_CURSOR    ,
-    ARROW_CURSOR            ,
-    IBEAM_CURSOR            ,
-    CENTER_CURSOR           ,
-    CROSSHAIR_CURSOR        ,
-    NOT_ALLOWED_CURSOR      ,
-    HRESIZE_CURSOR          ,
-    VRESIZE_CURSOR          ,
-    RESIZE_EW_CURSOR        ,
-    RESIZE_NS_CURSOR        ,
-    RESIZE_NESW_CURSOR      ,
-    RESIZE_NWSE_CURSOR      ,
-} CursorFlag;
+    HRT_HAND_CURSOR             ,
+    HRT_POINTING_HAND_CURSOR    ,
+    HRT_ARROW_CURSOR            ,
+    HRT_IBEAM_CURSOR            ,
+    HRT_CENTER_CURSOR           ,
+    HRT_CROSSHAIR_CURSOR        ,
+    HRT_NOT_ALLOWED_CURSOR      ,
+    HRT_HRESIZE_CURSOR          ,
+    HRT_VRESIZE_CURSOR          ,
+    HRT_RESIZE_EW_CURSOR        ,
+    HRT_RESIZE_NS_CURSOR        ,
+    HRT_RESIZE_NESW_CURSOR      ,
+    HRT_RESIZE_NWSE_CURSOR      ,
+} hrt_CursorFlag;
 
 
 typedef struct hrt_Mouse
 {
     GLFWcursor* GLFW_cursor;
-    CursorFlag cursorFlag;
+    hrt_CursorFlag cursorFlag;
 
     double x;
     double y;
@@ -204,12 +204,12 @@ typedef struct hrt_Mouse
 
 
 bool hrt_isMouseIn(hrt_Rect rect);
-bool hrt_isMousePressed(MouseFlag mouse_flag);
-bool hrt_isMouseReleased(MouseFlag mouse_flag);
-bool hrt_isMouseClicked(MouseFlag mouse_flag);
+bool hrt_isMousePressed(hrt_MouseFlag mouse_flag);
+bool hrt_isMouseReleased(hrt_MouseFlag mouse_flag);
+bool hrt_isMouseClicked(hrt_MouseFlag mouse_flag);
 
 
-void hrt_setMouseCursor(CursorFlag cf);
+void hrt_setMouseCursor(hrt_CursorFlag cf);
 
 
 void hrt_enableMouseScrollMovement();
@@ -236,6 +236,8 @@ unsigned int hrt_loadFont(const char* font_path , unsigned int font_size);
 void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b , int a);
 void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b , int a);
 hrt_Size hrt_getTextSize(const char* text , unsigned int font_id);
+int hrt_getTextWidth(const char* text , unsigned int font_id);
+int hrt_getTextHeight(unsigned int font_id);
 void __hrt_drawTextureAtlas(hrt_Rect rct);
 
 void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b , int a);
@@ -259,15 +261,15 @@ void hrt_destroyRenderer();
 //                  -- WINDOW --
 typedef enum
 {
-    WINDOW_POS_CENTERED             = -1            ,
-    WINDOW_SHOWN                    = 1 << 0        ,
-    WINDOW_MAXIMIZED                = 1 << 1        ,
-    WINDOW_MINIMIZED                = 1 << 2        ,
-    WINDOW_FULLSCREEN               = 1 << 3        ,
-    WINDOW_UNRESIZABLE              = 1 << 4        ,
-    WINDOW_BORDERLESS               = 1 << 5        ,
-    WINDOW_TRANSPARENT              = 1 << 6        ,
-} WindowFlag;
+    HRT_WINDOW_POS_CENTERED             = 1 << 12        ,
+    HRT_WINDOW_SHOWN                    = 1 << 13        ,
+    HRT_WINDOW_MAXIMIZED                = 1 << 14        ,
+    HRT_WINDOW_MINIMIZED                = 1 << 15        ,
+    HRT_WINDOW_FULLSCREEN               = 1 << 16        ,
+    HRT_WINDOW_UNRESIZABLE              = 1 << 17        ,
+    HRT_WINDOW_BORDERLESS               = 1 << 18        ,
+    HRT_WINDOW_TRANSPARENT              = 1 << 19        ,
+} hrt_WindowFlag;
 
 typedef struct hrt_Window
 {

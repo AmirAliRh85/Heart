@@ -1,14 +1,10 @@
 #include "./Heart.h"
 
-/**             | TODO LIST |
- *  1. FIX : Mouse Wheel works but it is not efficient
- *  2. FIX : textInput still needs some fixes
- * 
- */
+
 
 int main()
 {
-    hrt_createWindow(600 , 400 , "Testing" , WINDOW_SHOWN , WINDOW_POS_CENTERED , WINDOW_POS_CENTERED);
+    hrt_createWindow(600 , 400 , "Testing" , HRT_WINDOW_SHOWN , HRT_WINDOW_POS_CENTERED , HRT_WINDOW_POS_CENTERED);
 
     unsigned int font_id = hrt_loadFont("./assets/Roboto-Regular.ttf" , 14);
     const char* t = "Hello World!";
@@ -19,8 +15,9 @@ int main()
     while (hrt_isWindowRunning())
     {
         hrt_drawBackground(225 , 225 , 225 , 250);
+        hrt_Rect rect2 = {30 , 30 , hrt_getTextWidth(t , font_id) , hrt_getTextHeight(font_id)};
 
-        hrt_drawFilledRoundedRectangle(rect , 6 , 165 , 165 , 165 , 255);
+        hrt_drawFilledRectangle(rect2 , 165 , 165 , 165 , 255);
         hrt_drawText(text_pos , t , font_id , 25 , 25 , 25 , 255);
 
         hrt_updateWindow();

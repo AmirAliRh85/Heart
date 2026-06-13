@@ -11,7 +11,7 @@ static void __textInput(GLFWwindow* window , unsigned int code_point)
 }
 
 
-bool hrt_isKeyPressed(KeyboardFlag keyboard_flag)
+bool hrt_isKeyPressed(hrt_KeyboardFlag keyboard_flag)
 {
     if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_PRESS)
         return true;
@@ -19,7 +19,7 @@ bool hrt_isKeyPressed(KeyboardFlag keyboard_flag)
     return false;
 }
 
-bool hrt_isKeyReleased(KeyboardFlag keyboard_flag)
+bool hrt_isKeyReleased(hrt_KeyboardFlag keyboard_flag)
 {
     if (glfwGetKey(WINDOW.GLFW_window , (int)keyboard_flag) == GLFW_RELEASE)
         return true;

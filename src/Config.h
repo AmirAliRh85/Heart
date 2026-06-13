@@ -31,6 +31,13 @@
  *
  */
 
+/**             | TODO LIST |
+ *  1. FIX : Mouse Wheel works but it is not efficient
+ *  2. FIX : textInput still needs some fixes
+ *  3. fixing name of some functions and enums
+ * 
+ */
+
 typedef struct
 {
     int x;
@@ -61,10 +68,10 @@ typedef struct
     int w , h;
 } hrt_Rect;
 
-inline void hrt_Rect_center(hrt_Rect* rct1 , hrt_Rect* rct2)
+inline void hrt_Rect_center(hrt_Rect* des , hrt_Rect* target)
 {
-    rct1->x = rct2->x + (rct2->w - rct1->w) / 2;
-    rct1->y = rct2->y + (rct2->h - rct1->h) / 2;
+    des->x = target->x + (target->w - des->w) / 2;
+    des->y = target->y + (target->h - des->h) / 2;
 }
 
 
@@ -74,14 +81,14 @@ typedef struct
     int g;
     int b;
     int a;
-} ColorRGBA;
+} hrt_ColorRGBA;
 
 typedef struct
 {
     int r;
     int g;
     int b;
-} ColorRGB;
+} hrt_ColorRGB;
 
 
 #define RED         255 , 0 , 0 , 255

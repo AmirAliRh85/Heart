@@ -588,6 +588,38 @@ hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned 
     return hrt_BatchDraw_Dynamic_getEnglishTextSize(_textBuff , font_id);
 }
 
+int hrt_BatchDraw_Dynamic_getEnglishTextWidth(const char* text , unsigned int font_id)
+{
+    int w;
+    char c;
+    hrt_Character ch;
+    while (*text != '\0')
+    {
+        c = *text;
+
+
+        for (int i = 0 ; i < hrt_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
+        {
+            if (c == *(char*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , FIRST))
+            {
+                ch = *(hrt_Character*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , SECOND);
+                break;
+            }
+        }
+        
+        w += ch.advanceX;
+        text++;
+    }
+
+    return w;
+}
+
+int hrt_BatchDraw_Dynamic_getEnglishTextHeight(unsigned int font_id)
+{
+    return CORE->Dynamic->EF[font_id].maxHeight;
+}
+
+
 void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr)
 {
     hrt_BatchDraw_Dynamic_addPrimitive(arr , TRIANGLE);

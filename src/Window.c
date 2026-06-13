@@ -25,33 +25,33 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
     WINDOW.title = window_name;
 
 
-    if (WINDOW_BORDERLESS & WINDOW.windowFlag)
+    if (HRT_WINDOW_BORDERLESS & WINDOW.windowFlag)
         glfwWindowHint(GLFW_DECORATED , 0);
-    if (WINDOW_TRANSPARENT & WINDOW.windowFlag)
+    if (HRT_WINDOW_TRANSPARENT & WINDOW.windowFlag)
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER , 1);
-    if (WINDOW_MINIMIZED & WINDOW.windowFlag)
+    if (HRT_WINDOW_MINIMIZED & WINDOW.windowFlag)
         glfwWindowHint(GLFW_VISIBLE , 0);
-    if (WINDOW_UNRESIZABLE & WINDOW.windowFlag)
+    if (HRT_WINDOW_UNRESIZABLE & WINDOW.windowFlag)
         glfwWindowHint(GLFW_RESIZABLE , 0);
-    if (WINDOW_FULLSCREEN & WINDOW.windowFlag)
+    if (HRT_WINDOW_FULLSCREEN & WINDOW.windowFlag)
     {
         WINDOW.GLFW_window = glfwCreateWindow(WINDOW.GLFW_mode->width , WINDOW.GLFW_mode->height , WINDOW.title , WINDOW.GLFW_monitor , NULL);
         WINDOW.width = WINDOW.GLFW_mode->width;
         WINDOW.height = WINDOW.GLFW_mode->height;
     }
 
-    if (!(WINDOW_FULLSCREEN & WINDOW.windowFlag))
-    {   
+    if (!(HRT_WINDOW_FULLSCREEN & WINDOW.windowFlag))
+    {
         WINDOW.GLFW_window = glfwCreateWindow(w , h , WINDOW.title , NULL , NULL);
         WINDOW.width = w;
         WINDOW.height = h;
-        if (WINDOW_POS_CENTERED & WINDOW.windowFlag)
+        if (HRT_WINDOW_POS_CENTERED & (x_pos | y_pos))
         {
             WINDOW.x = WINDOW.GLFW_mode->width / 2 - w / 2;
             WINDOW.y = WINDOW.GLFW_mode->height / 2 - h / 2;
             glfwSetWindowPos(WINDOW.GLFW_window , WINDOW.x , WINDOW.y);
         }
-        else if (WINDOW_MAXIMIZED & WINDOW.windowFlag)
+        else if (HRT_WINDOW_MAXIMIZED & WINDOW.windowFlag)
         {
             glfwMaximizeWindow(WINDOW.GLFW_window);
         }
@@ -69,7 +69,7 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
 
     WINDOW.Keyboard.TIH.objectAddress = NULL;
 
-    hrt_setMouseCursor(ARROW_CURSOR);
+    hrt_setMouseCursor(HRT_ARROW_CURSOR);
     hrt_enableMouseScrollMovement();
 
     hrt_initRenderer();
@@ -79,7 +79,7 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
 
 void hrt_setWindowOpacity(int alpha)
 {
-    if (WINDOW_TRANSPARENT & WINDOW.windowFlag)
+    if (HRT_WINDOW_TRANSPARENT & WINDOW.windowFlag)
     {
         glfwSetWindowOpacity(WINDOW.GLFW_window , alpha / 255.0f);
     }
@@ -96,9 +96,9 @@ int hrt_getWindowWidth() { return WINDOW.width ; }
 bool hrt_isWindowRunning() { return !glfwWindowShouldClose(WINDOW.GLFW_window) ; }
 void hrt_updateWindow()
 {
-    #ifdef GCL_WINDOW_ENABLE_WAIT_EVENTS
+    #ifdef GCL_HRT_WINDOW_ENABLE_WAIT_EVENTS
         glfwWaitEvents();
-    #elif GCL_WINDOW_ENABLE_POLL_EVENTS
+    #elif GCL_HRT_WINDOW_ENABLE_POLL_EVENTS
         glfwPollEvents();                       // should not be used with glfwWaitEvents()
     #else
         glfwWaitEventsTimeout(1.0 / 45.0);      // It is set to 45 fps

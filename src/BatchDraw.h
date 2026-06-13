@@ -158,6 +158,8 @@ void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , i
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id);
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned int font_id , int len);
+int hrt_BatchDraw_Dynamic_getEnglishTextWidth(const char* text , unsigned int font_id);
+int hrt_BatchDraw_Dynamic_getEnglishTextHeight(unsigned int font_id);
 
 void hrt_BatchDraw_Dynamic_addTextureAtlas(float* arr); // It is used for testing
 

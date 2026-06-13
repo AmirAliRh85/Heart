@@ -20,66 +20,66 @@ bool hrt_isMouseIn(hrt_Rect rect)
     return false;
 }
 
-bool hrt_isMousePressed(MouseFlag mouse_flag)
+bool hrt_isMousePressed(hrt_MouseFlag mouse_flag)
 {
-    if (mouse_flag == BUTTON_LEFT)
+    if (mouse_flag == HRT_BUTTON_LEFT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
             return true;
-    if (mouse_flag == BUTTON_RIGHT)
+    if (mouse_flag == HRT_BUTTON_RIGHT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
             return true;
-    if (mouse_flag == BUTTON_MIDDLE)
+    if (mouse_flag == HRT_BUTTON_MIDDLE)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS)
             return true;
 
     return false;
 }
 
-bool hrt_isMouseReleased(MouseFlag mouse_flag)
+bool hrt_isMouseReleased(hrt_MouseFlag mouse_flag)
 {
-    if (mouse_flag == BUTTON_LEFT)
+    if (mouse_flag == HRT_BUTTON_LEFT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
             return true;
-    if (mouse_flag == BUTTON_RIGHT)
+    if (mouse_flag == HRT_BUTTON_RIGHT)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE)
             return true;
-    if (mouse_flag == BUTTON_MIDDLE)
+    if (mouse_flag == HRT_BUTTON_MIDDLE)
         if (glfwGetMouseButton(WINDOW.GLFW_window , GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_RELEASE)
             return true;
 
     return false;
 }
 
-bool hrt_isMouseClicked(MouseFlag mouse_flag)
+bool hrt_isMouseClicked(hrt_MouseFlag mouse_flag)
 {
     static bool button_left_is_released = true;
     static bool button_right_is_released = true;
     static bool button_middle_is_released = true;
-    if (mouse_flag == BUTTON_LEFT)
+    if (mouse_flag == HRT_BUTTON_LEFT)
     {
-        if (hrt_isMousePressed(BUTTON_LEFT) && button_left_is_released)
+        if (hrt_isMousePressed(HRT_BUTTON_LEFT) && button_left_is_released)
             button_left_is_released = false;
-        else if (hrt_isMouseReleased(BUTTON_LEFT) && !button_left_is_released)
+        else if (hrt_isMouseReleased(HRT_BUTTON_LEFT) && !button_left_is_released)
         {
             button_left_is_released = true;
             return true;
         }
     }
-    else if (mouse_flag == BUTTON_RIGHT)
+    else if (mouse_flag == HRT_BUTTON_RIGHT)
     {
-        if (hrt_isMousePressed(BUTTON_RIGHT) && button_right_is_released)
+        if (hrt_isMousePressed(HRT_BUTTON_RIGHT) && button_right_is_released)
             button_right_is_released = false;
-        else if (hrt_isMouseReleased(BUTTON_RIGHT) && !button_right_is_released)
+        else if (hrt_isMouseReleased(HRT_BUTTON_RIGHT) && !button_right_is_released)
         {
             button_right_is_released = true;
             return true;
         }
     }
-    else if (mouse_flag == BUTTON_MIDDLE)
+    else if (mouse_flag == HRT_BUTTON_MIDDLE)
     {
-        if (hrt_isMousePressed(BUTTON_MIDDLE) && button_middle_is_released)
+        if (hrt_isMousePressed(HRT_BUTTON_MIDDLE) && button_middle_is_released)
             button_middle_is_released = false;
-        else if (hrt_isMouseReleased(BUTTON_MIDDLE) && !button_middle_is_released)
+        else if (hrt_isMouseReleased(HRT_BUTTON_MIDDLE) && !button_middle_is_released)
         {
             button_middle_is_released = true;
             return true;
@@ -89,46 +89,46 @@ bool hrt_isMouseClicked(MouseFlag mouse_flag)
 }
 
 
-void hrt_setMouseCursor(CursorFlag cf)
+void hrt_setMouseCursor(hrt_CursorFlag cf)
 {
     if (WINDOW.Mouse.cursorFlag != cf)
     {
         switch (cf)
         {
-            case ARROW_CURSOR :
+            case HRT_ARROW_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
                 break;
-            case HAND_CURSOR :
+            case HRT_HAND_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
                 break;
-            case IBEAM_CURSOR :
+            case HRT_IBEAM_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
                 break;
-            case CENTER_CURSOR:
+            case HRT_CENTER_CURSOR:
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_CENTER_CURSOR);
                 break;
-            case CROSSHAIR_CURSOR :
+            case HRT_CROSSHAIR_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
                 break;
-            case NOT_ALLOWED_CURSOR :
+            case HRT_NOT_ALLOWED_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_NOT_ALLOWED_CURSOR);
                 break;
-            case HRESIZE_CURSOR :
+            case HRT_HRESIZE_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
                 break;
-            case VRESIZE_CURSOR :
+            case HRT_VRESIZE_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
                 break;
-            case RESIZE_NS_CURSOR :
+            case HRT_RESIZE_NS_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_RESIZE_NS_CURSOR);
                 break;
-            case RESIZE_EW_CURSOR :
+            case HRT_RESIZE_EW_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_RESIZE_EW_CURSOR);
                 break;
-            case RESIZE_NESW_CURSOR :
+            case HRT_RESIZE_NESW_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_RESIZE_NESW_CURSOR);
                 break;
-            case RESIZE_NWSE_CURSOR :
+            case HRT_RESIZE_NWSE_CURSOR :
                 WINDOW.Mouse.GLFW_cursor = glfwCreateStandardCursor(GLFW_RESIZE_NWSE_CURSOR);
                 break;
         }
