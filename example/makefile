@@ -1,13 +1,13 @@
-compiler = g++
-file = main
-target = $(file).exe
+compiler = gcc
+file = main.c
+target = main.exe
 
-cpp_linker = ..\external\glad\src\glad.c
+c_linker = ..\external\glad\src\glad.c ..\src\Window.c ..\src\Renderer.c ..\src\Mouse.c ..\src\Keyboard.c ..\src\BatchDraw.c ..\src\Utils.c
+lib_linker = -llibglfw3 -lopengl32 -lgdi32 -llibfreetype
 
-lib_linker = -llibglfw3 -lopengl32 -lgdi32
 
 run : compile
 	.\$(target)
 
 compile :
-	$(compiler) $(file).cpp -o $(target) $(cpp_linker) $(lib_linker)
+	$(compiler) $(file) -o $(target) $(c_linker) $(lib_linker)
