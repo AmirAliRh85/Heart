@@ -33,13 +33,13 @@ Here is a simple "Hello World!" program:
 
 int main()
 {
-    hrt_createWindow(600 , 400 , "Testing" , WINDOW_SHOWN , WINDOW_POS_CENTERED , WINDOW_POS_CENTERED);
+    hrt_createWindow(600 , 400 , "Testing" , HRT_WINDOW_SHOWN , HRT_WINDOW_POS_CENTERED , HRT_WINDOW_POS_CENTERED);
 
-    unsigned int font_id = hrt_loadFont("./assets/Roboto-Regular.ttf" , 14);
+    unsigned int font_id = hrt_loadFont("./assets/Roboto-Regular.ttf" , 14);    // you can upload your own font
     const char* t = "Hello World!";
     hrt_Size text_size = hrt_getTextSize(t , font_id);
     hrt_Pos text_pos = {30 , 30};
-    hrt_Rect rect = {24 , 24 , 12 + text_size.w , 12 + text_size.h}; // 6px padding
+    hrt_Rect rect = {24 , 24 , 12 + text_size.w , 12 + text_size.h};            // 6px padding
 
     while (hrt_isWindowRunning())
     {
