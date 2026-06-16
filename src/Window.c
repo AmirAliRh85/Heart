@@ -21,6 +21,11 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
     WINDOW.GLFW_mode = glfwGetVideoMode(WINDOW.GLFW_monitor);
     WINDOW.x = x_pos;
     WINDOW.y = y_pos;
+    WINDOW.maxWidth = WINDOW.GLFW_mode->width;
+    WINDOW.maxHeight = WINDOW.GLFW_mode->height;
+    WINDOW.minWidth = 100;
+    WINDOW.minHeight = 0;
+    WINDOW.fps = 45;
     WINDOW.windowFlag = wnd_flag;
     WINDOW.title = window_name;
 
@@ -64,6 +69,8 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
 
     glfwGetWindowPos(WINDOW.GLFW_window , &WINDOW.x , &WINDOW.y);
 
+    glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
+
     glfwMakeContextCurrent(WINDOW.GLFW_window);
     glfwSwapInterval(1);
 
@@ -86,7 +93,26 @@ void hrt_setWindowOpacity(int alpha)
 }
 void hrt_stopWindowRunning() { glfwSetWindowShouldClose(WINDOW.GLFW_window , 1) ; }
 void hrt_setWindowTitle(const char* new_window_name) { glfwSetWindowTitle(WINDOW.GLFW_window , new_window_name) ; }
-
+void hrt_setWindowMinWidth(int w)
+{
+    WINDOW.minWidth = w;
+    glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
+}
+void hrt_setWindowMinHeight(int h)
+{
+    WINDOW.minHeight = h;
+    glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
+}
+void hrt_setWindowMaxWidth(int w)
+{
+    WINDOW.maxWidth = w;
+    glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
+}
+void hrt_setWindowMaxHeight(int h)
+{
+    WINDOW.maxHeight = h;
+    glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
+}
 
 int hrt_getWindowPosX() { return WINDOW.x ; }
 int hrt_getWindowPosY() { return WINDOW.y ; }
@@ -101,7 +127,7 @@ void hrt_updateWindow()
     #elif GCL_HRT_WINDOW_ENABLE_POLL_EVENTS
         glfwPollEvents();                       // should not be used with glfwWaitEvents()
     #else
-        glfwWaitEventsTimeout(1.0 / 45.0);      // It is set to 45 fps
+        glfwWaitEventsTimeout(1.0f / WINDOW.fps);      // It is set to 45 fps
     #endif
 
 
@@ -113,7 +139,7 @@ void hrt_updateWindow()
 
 
 void hrt_destroyWindow()
-{ 
+{
     hrt_destroyMouse();
     hrt_destroyRenderer();
     glfwDestroyWindow(WINDOW.GLFW_window);

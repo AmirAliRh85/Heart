@@ -8,7 +8,7 @@
 #define HRT_MINOR_VERSION   3
 #define HRT_PATCH_VERSION   6
 
-#define HRT_VERSION         "0.3.6"
+#define HRT_VERSION         "0.3.7"
 
 #define HRT_OK                      0
 #define HRT_ERROR                   -1
@@ -27,6 +27,7 @@
  *      0.3.4       ADD : multiline text rendering
  *      0.3.6       FIX : multiline text rendering and text input
  *      0.3.7       ADD : alpha channel for drawing primitives
+ *      0.3.8       ADD : minimum and maximum width and height for window's size
  * 
  *
  */

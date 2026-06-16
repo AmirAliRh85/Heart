@@ -11,7 +11,7 @@ static void __framebufferCallback(GLFWwindow* window , int w , int h)
     WINDOW.height = h;
     glViewport(0 , 0 , WINDOW.width , WINDOW.height);
 
-    printf("Framebuffer size got changed\n");
+    // printf("Framebuffer size got changed\n");
 }
 
 

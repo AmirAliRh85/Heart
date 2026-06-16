@@ -275,6 +275,8 @@ typedef struct hrt_Window
 {
     // WINDOW PROPERTY
     int width , height , x , y;
+    int maxWidth , maxHeight , minWidth , minHeight;
+    int fps;
     int windowFlag;
     const char* title;
 
@@ -302,6 +304,10 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
 void hrt_setWindowOpacity(int alpha);
 void hrt_stopWindowRunning();
 void hrt_setWindowTitle(const char* new_window_name);
+void hrt_setWindowMinWidth(int w);
+void hrt_setWindowMinHeight(int h);
+void hrt_setWindowMaxWidth(int w);
+void hrt_setWindowMaxHeight(int h);
 
 
 int hrt_getWindowPosX();

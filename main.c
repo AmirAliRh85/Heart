@@ -5,6 +5,7 @@
 int main()
 {
     hrt_createWindow(600 , 400 , "Testing" , HRT_WINDOW_SHOWN , HRT_WINDOW_POS_CENTERED , HRT_WINDOW_POS_CENTERED);
+    hrt_setWindowMinHeight(500);
 
     unsigned int font_id = hrt_loadFont("./assets/Roboto-Regular.ttf" , 14);
     const char* t = "Hello World!";
