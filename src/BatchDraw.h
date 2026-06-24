@@ -19,8 +19,8 @@
 
 #define VERTEX_ATTRIBUTE                8           // x , y , r , g , b , a , u , v
 
-#define ATLAS_WIDTH                     1024.0f
-#define ATLAS_HEIGHT                    1024.0f
+#define ATLAS_WIDTH                     2048.0f
+#define ATLAS_HEIGHT                    2048.0f
 
 #define MAX_ATLAS                       1
 #define MAX_IMAGE                       20

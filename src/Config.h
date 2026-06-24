@@ -28,6 +28,7 @@
  *      0.3.6       FIX : multiline text rendering and text input
  *      0.3.7       ADD : alpha channel for drawing primitives
  *      0.3.8       ADD : minimum and maximum width and height for window's size
+ *      0.3.9       ADD : not rendering shapes that are out of 
  * 
  *
  */
@@ -36,6 +37,7 @@
  *  1. FIX : Mouse Wheel works but it is not efficient
  *  2. FIX : textInput still needs some fixes
  *  3. fixing name of some functions and enums
+ *  4. ADD : Adding SDF for rendering rouneded shapes and rounded borders
  * 
  */
 
