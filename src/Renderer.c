@@ -2,6 +2,7 @@
 #define HRT_RENDERER_H
 
 #include "./Window.h"
+// #include "./Utils.h"
 #include "./BatchDraw.h"
 #include <math.h>
 

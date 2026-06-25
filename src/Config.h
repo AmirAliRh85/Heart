@@ -1,18 +1,18 @@
 #ifndef HRT_CONFIG_H
 #define HRT_CONFIG_H
 
-#include "../external/glad/include/glad.h"
-#include <GLFW/glfw3.h>
-
 #define HRT_MAJOR_VERSION   0
 #define HRT_MINOR_VERSION   3
-#define HRT_PATCH_VERSION   6
+#define HRT_PATCH_VERSION   9
 
-#define HRT_VERSION         "0.3.7"
+#define __HRT_STRINGIFY_(_a)        #_a
+#define __HRT_STRINGIFY(_a)         __HRT_STRINGIFY_(_a)
+#define HRT_VERSION                 __HRT_STRINGIFY(HRT_MAJOR_VERSION) "." __HRT_STRINGIFY(HRT_MINOR_VERSION) "." __HRT_STRINGIFY(HRT_PATCH_VERSION)
 
-#define HRT_OK                      0
-#define HRT_ERROR                   -1
-#define HRT_WARNING                 1
+#define HRT_OK                      1
+#define HRT_LOG                     0
+#define HRT_WARNING                 -1
+#define HRT_ERROR                   -2
 
 /*
  *      Name converntion for commits : (Heart x.y.z) TYPE : info
@@ -28,16 +28,18 @@
  *      0.3.6       FIX : multiline text rendering and text input
  *      0.3.7       ADD : alpha channel for drawing primitives
  *      0.3.8       ADD : minimum and maximum width and height for window's size
- *      0.3.9       ADD : not rendering shapes that are out of 
+ *      0.3.9       ADD : not rendering shapes that are out of scissor rectangle or window size
+ *      0.3.10      FIX : hiding external libs and implementaion from user and applying pimpl principle
  * 
  *
  */
 
-/**             | TODO LIST |
+/**                         | TODO LIST |
  *  1. FIX : Mouse Wheel works but it is not efficient
  *  2. FIX : textInput still needs some fixes
  *  3. fixing name of some functions and enums
  *  4. ADD : Adding SDF for rendering rouneded shapes and rounded borders
+ *  5. FIX : external libraries should not be exposed to user (done)
  * 
  */
 
@@ -94,10 +96,10 @@ typedef struct
 } hrt_ColorRGB;
 
 
-#define RED         255 , 0 , 0 , 255
-#define GREEN       0 , 255 , 0 , 255
-#define BLUE        0 , 0 , 255 , 255
-#define WHITE       255 , 255 , 255 , 255
-#define BLACK       0 , 0 , 0 , 255
+#define HRT_RED         255 , 0 , 0 , 255
+#define HRT_GREEN       0 , 255 , 0 , 255
+#define HRT_BLUE        0 , 0 , 255 , 255
+#define HRT_WHITE       255 , 255 , 255 , 255
+#define HRT_BLACK       0 , 0 , 0 , 255
 
 #endif
