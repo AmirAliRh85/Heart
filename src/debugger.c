@@ -4,6 +4,7 @@
 #define HRT_DEBUG
 #define HRT_AUTO_FREE
 
+
 hrt_ResourceTracker ResourceTracker;
 
 
@@ -47,7 +48,7 @@ void* hrt_malloc(size_t _size , const char* _name)
 
             hrt_DynamicArray_push(ResourceTracker.addressAllocated , &obj);
 
-            printf("Memory got allocated for %s\n" , _name);
+            printf("[info] Memory got allocated for %s\n" , _name);
         }
     #else
         #warning "debug mode is not enabled either define HRT_DEBUG in your file or just add -DHRT_DEBUG compile flag"

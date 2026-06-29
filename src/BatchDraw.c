@@ -60,7 +60,7 @@ void hrt_BatchDraw_init()
 {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        printf("Failed to load openGL context\n");
+        printf("[error] Failed to load openGL context\n");
         return;
     }
     glViewport(0 , 0 , WINDOW.width , WINDOW.height);
@@ -130,35 +130,36 @@ void hrt_BatchDraw_init()
 
     printf("================ GCL ================\n");
 
+    hrt_ResouceTracker_create();
 
-    _textBuff = (char*)malloc(1024);
+    _textBuff = (char*)hrt_malloc(1024 , "_textBuff in BatchDraw.c");
 
 
-    CORE = (BatchDraw*)malloc(sizeof(BatchDraw));
+    CORE = (BatchDraw*)hrt_malloc(sizeof(BatchDraw) , "CORE");
     CORE->currBatchIdx = 0;
     CORE->currScissorIdx = 0;
     CORE->currBatchShape = NONE;
     
 
-    CORE->Dynamic = (_Dynamic*)malloc(sizeof(_Dynamic));
+    CORE->Dynamic = (_Dynamic*)hrt_malloc(sizeof(_Dynamic) , "Dynamic for CORE");
     
-    CORE->Dynamic->vertexTriangle = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE);
+    CORE->Dynamic->vertexTriangle = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE , "Dynamic's traignles's vertex");
     CORE->Dynamic->currVertexTriangleIdx = 0;
     CORE->Dynamic->currVertexTriangleIdxInserted = 0;
-    CORE->Dynamic->vertexLine = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE * VERTEX_ATTRIBUTE);
+    CORE->Dynamic->vertexLine = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE * VERTEX_ATTRIBUTE , "Dynamic's lines's vertex");
     CORE->Dynamic->currVertexLineIdx = 0;
     CORE->Dynamic->currVertexLineIdxInserted = 0;
-    CORE->Dynamic->vertexPoint = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT * VERTEX_ATTRIBUTE);
+    CORE->Dynamic->vertexPoint = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT * VERTEX_ATTRIBUTE , "Dynamic's points's vertex");
     CORE->Dynamic->currVertexPointIdx = 0;
     CORE->Dynamic->currVertexPointIdxInserted = 0;
 
-    CORE->Dynamic->vertexDynamic = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX * VERTEX_ATTRIBUTE);
+    CORE->Dynamic->vertexDynamic = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX * VERTEX_ATTRIBUTE , "Dynamic's vertex");
     CORE->Dynamic->currVertexDynamicIdx = 0;
 
     CORE->Dynamic->texID = 0;
     CORE->Dynamic->texUnit = 0;
 
-    CORE->Dynamic->TA = (hrt_TextureAtlas*)malloc(sizeof(hrt_TextureAtlas) * MAX_ATLAS);
+    CORE->Dynamic->TA = (hrt_TextureAtlas*)hrt_malloc(sizeof(hrt_TextureAtlas) * MAX_ATLAS , "TextureAtlas");
     CORE->Dynamic->TA->width = ATLAS_WIDTH;
     CORE->Dynamic->TA->height = ATLAS_HEIGHT;
     CORE->Dynamic->TA->heightOccupied = 0;
@@ -166,11 +167,11 @@ void hrt_BatchDraw_init()
     CORE->Dynamic->TA->isInitialized = false;
     CORE->Dynamic->TA->currShelfIdx = 0;
 
-    CORE->Dynamic->image = (hrt_Image*)malloc(sizeof(hrt_Image) * MAX_IMAGE);
+    CORE->Dynamic->image = (hrt_Image*)hrt_malloc(sizeof(hrt_Image) * MAX_IMAGE , "Dynamic's Image");
     CORE->Dynamic->currImageIdx = 0;
 
     CORE->Dynamic->currEFIdx = 0;
-    CORE->Dynamic->EF = (hrt_EnglishFont*)malloc(sizeof(hrt_EnglishFont) * MAX_FONT);
+    CORE->Dynamic->EF = (hrt_EnglishFont*)hrt_malloc(sizeof(hrt_EnglishFont) * MAX_FONT , "Dynamic's English Font");
     CORE->Dynamic->EF->characters = hrt_Pair_create(sizeof(unsigned char) , sizeof(hrt_Character));
 
 
@@ -819,20 +820,21 @@ void hrt_BatchDraw_destroy()
     glDeleteVertexArrays(1 , &CORE->vao);
     glDeleteBuffers(1 , &CORE->vbo);
 
-    free(_textBuff);
+    hrt_free(_textBuff);
     
-    free(CORE->Dynamic->vertexTriangle);
-    free(CORE->Dynamic->vertexLine);
-    free(CORE->Dynamic->vertexPoint);
-    free(CORE->Dynamic->vertexDynamic);
+    hrt_free(CORE->Dynamic->vertexTriangle);
+    hrt_free(CORE->Dynamic->vertexLine);
+    hrt_free(CORE->Dynamic->vertexPoint);
+    hrt_free(CORE->Dynamic->vertexDynamic);
     hrt_DynamicArray_destroy(CORE->Dynamic->TA->shelves);
-    free(CORE->Dynamic->TA);
-    free(CORE->Dynamic->image);
+    hrt_free(CORE->Dynamic->TA);
+    hrt_free(CORE->Dynamic->image);
     hrt_Pair_destroy(CORE->Dynamic->EF->characters);
-    free(CORE->Dynamic->EF);
-    free(CORE->Dynamic);
-    free(CORE);
+    hrt_free(CORE->Dynamic->EF);
+    hrt_free(CORE->Dynamic);
+    hrt_free(CORE);
 
+    hrt_ResouceTracker_destroy();
 
     glDeleteProgram(program);
 }

@@ -30,7 +30,7 @@
  *      0.3.8       ADD : minimum and maximum width and height for window's size
  *      0.3.9       ADD : not rendering shapes that are out of scissor rectangle or window size
  *      0.3.10      FIX : hiding external libs and implementaion from user and applying pimpl principle
- *      0.3.11      ADD : debugging mode and also better allocator and free function for safety
+ *      0.3.11      ADD : debugging mode and also better allocator function and free function for safety
  *
  */
 
