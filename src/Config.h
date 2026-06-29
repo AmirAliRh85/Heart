@@ -3,7 +3,7 @@
 
 #define HRT_MAJOR_VERSION   0
 #define HRT_MINOR_VERSION   3
-#define HRT_PATCH_VERSION   9
+#define HRT_PATCH_VERSION   11
 
 #define __HRT_STRINGIFY_(_a)        #_a
 #define __HRT_STRINGIFY(_a)         __HRT_STRINGIFY_(_a)
@@ -30,14 +30,14 @@
  *      0.3.8       ADD : minimum and maximum width and height for window's size
  *      0.3.9       ADD : not rendering shapes that are out of scissor rectangle or window size
  *      0.3.10      FIX : hiding external libs and implementaion from user and applying pimpl principle
- * 
+ *      0.3.11      ADD : debugging mode and also better allocator and free function for safety
  *
  */
 
 /**                         | TODO LIST |
  *  1. FIX : Mouse Wheel works but it is not efficient
  *  2. FIX : textInput still needs some fixes
- *  3. fixing name of some functions and enums
+ *  3. fixing name of some functions and enums (done)
  *  4. ADD : Adding SDF for rendering rouneded shapes and rounded borders
  *  5. FIX : external libraries should not be exposed to user (done)
  * 

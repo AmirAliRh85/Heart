@@ -1,10 +1,6 @@
 #include "./Utils.h"
 
-
 #define DEFAULT_DYNAMIC_ARRAY_CAPACITY  10
-
-
-
 
 
 hrt_DynamicArray* hrt_DynamicArray_create(int sizeof_obj)
@@ -24,7 +20,6 @@ hrt_DynamicArray* hrt_DynamicArray_create(int sizeof_obj)
     return da;
 }
 
-
 void hrt_DynamicArray_push(hrt_DynamicArray* da , const void* src)
 {
     if (da->currentIdx >= da->capacity)
@@ -39,6 +34,21 @@ void hrt_DynamicArray_pop(hrt_DynamicArray* da)
 {
     if (da->currentIdx > 0)
         da->currentIdx -= 1;
+}
+
+void hrt_DynamicArray_remove(hrt_DynamicArray* da , int index)
+{
+    if (index == da->currentIdx - 1)
+        hrt_DynamicArray_pop(da);
+
+    if (index >= da->currentIdx || index < 0)
+        return;
+
+    void* dst = hrt_DynamicArray_at(da , index);
+    void* src = hrt_DynamicArray_at(da , index + 1);
+
+    memcpy(dst , src , (da->currentIdx - (index + 1)) * da->elementSize);
+    da->currentIdx -= 1;
 }
 
 void hrt_DynamicArray_resize(hrt_DynamicArray* da)
@@ -61,6 +71,7 @@ void hrt_DynamicArray_destroy(hrt_DynamicArray* da)
         free(da);
 }
 
+
 void* hrt_DynamicArray_at(hrt_DynamicArray* da , int index)
 {
     if (index >= 0 && index < da->currentIdx)
@@ -79,7 +90,18 @@ int hrt_DynamicArray_capacity(hrt_DynamicArray* da)
     return da->capacity;
 }
 
+int hrt_DynamicArray_find(hrt_DynamicArray* da , const void* val)
+{
+    int len = hrt_DynamicArray_length(da);
+    for (unsigned int i = 0 ; i < len ; i++)
+    {
+        void* curr_val = hrt_DynamicArray_at(da , i);
+        if (memcmp(val , curr_val , da->elementSize) == 0)
+            return i;
+    }
 
+    return -1;
+}
 
 
 

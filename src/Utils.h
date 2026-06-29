@@ -5,7 +5,9 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <string.h>
+//                  -- algorithms --
 
+//                  -- DynamicArray --
 typedef struct hrt_DynamicArray
 {
     int capacity;
@@ -18,6 +20,7 @@ typedef struct hrt_DynamicArray
 
 hrt_DynamicArray* hrt_DynamicArray_create(int sizeof_obj);
 void hrt_DynamicArray_pop(hrt_DynamicArray* da);
+void hrt_DynamicArray_remove(hrt_DynamicArray* da , int index);
 void hrt_DynamicArray_push(hrt_DynamicArray* da , const void* src);
 void hrt_DynamicArray_resize(hrt_DynamicArray* da);
 void hrt_DynamicArray_destroy(hrt_DynamicArray* da);
@@ -25,12 +28,25 @@ void hrt_DynamicArray_destroy(hrt_DynamicArray* da);
 void* hrt_DynamicArray_at(hrt_DynamicArray* da , int index);
 int hrt_DynamicArray_length(hrt_DynamicArray* da);
 int hrt_DynamicArray_capacity(hrt_DynamicArray* da);
+int hrt_DynamicArray_find(hrt_DynamicArray* da , const void* val);
 
+//                  -- LinkedList --
 
+typedef struct hrt_Node1 hrt_Node1;
+
+struct hrt_Node1
+{
+    hrt_Node1* next;
+    void* value;
+};
+
+// extern hrt_Node1* head;
+
+//                  -- Pair --
 
 typedef enum
 {
-    FIRST       = 0 ,
+    FIRST       = 0         ,
     SECOND
 } hrt_PairFlag;
 
@@ -102,7 +118,21 @@ typedef struct
 } hrt_Log;
 */
 
+//                  -- Debugging --
 
+typedef struct hrt_ResourceTracker
+{
+    hrt_DynamicArray* addressAllocated;
+    int memAllocated;
+} hrt_ResourceTracker;
+
+extern hrt_ResourceTracker ResourceTracker;
+
+void hrt_ResouceTracker_create();
+void* hrt_malloc(size_t _size , const char* _name);
+void hrt_free(void* _memory);
+void hrt_memDebug();
+void hrt_ResouceTracker_destroy();
 
 
 #endif

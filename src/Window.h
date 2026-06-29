@@ -16,7 +16,7 @@ typedef struct hrt_TextInputHandler
 {
     char* objectAddress;
     int currentIdx;                         // including '\0'
-    int bufferSize;                         // including '\0'    
+    int bufferSize;                         // including '\0'
 
 } hrt_TextInputHandler;
 
