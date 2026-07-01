@@ -5,9 +5,9 @@
 #define HRT_MINOR_VERSION   3
 #define HRT_PATCH_VERSION   11
 
-#define __HRT_STRINGIFY_(_a)        #_a
-#define __HRT_STRINGIFY(_a)         __HRT_STRINGIFY_(_a)
-#define HRT_VERSION                 __HRT_STRINGIFY(HRT_MAJOR_VERSION) "." __HRT_STRINGIFY(HRT_MINOR_VERSION) "." __HRT_STRINGIFY(HRT_PATCH_VERSION)
+#define HRTT__STRINGIFY(a)        #a
+#define HRT__STRINGIFY(a)         HRTT__STRINGIFY(a)
+#define HRT_VERSION                HRT__STRINGIFY(HRT_MAJOR_VERSION) "." HRT__STRINGIFY(HRT_MINOR_VERSION) "." HRT__STRINGIFY(HRT_PATCH_VERSION)
 
 #define HRT_OK                      1
 #define HRT_LOG                     0

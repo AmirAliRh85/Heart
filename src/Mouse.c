@@ -2,13 +2,13 @@
 #include "./Window.h"
 
 
-static int __offsetX;
-static int __offsetY;
-static void __scrollCallback(GLFWwindow* window , double x_offset , double y_offset)
+static int offsetX;
+static int offsetY;
+static void scrollCallback(GLFWwindow* window , double x_offset , double y_offset)
 {
     // std::cout << y_offset << '\n';
-    __offsetX = (int)(x_offset * 20);
-    __offsetY = (int)(y_offset * 20);
+    offsetX = (int)(x_offset * 20);
+    offsetY = (int)(y_offset * 20);
 }
 
 
@@ -139,14 +139,14 @@ void hrt_setMouseCursor(hrt_CursorFlag cf)
 }
 
 
-void hrt_enableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , __scrollCallback) ; }
+void hrt_enableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , scrollCallback) ; }
 void hrt_disableMouseScrollMovement() { glfwSetScrollCallback(WINDOW.GLFW_window , NULL) ; }
 
 
 int hrt_getMousePosX() { return (int)WINDOW.Mouse.x ; }
 int hrt_getMousePosY() { return (int)WINDOW.Mouse.y ; }
-int hrt_getMouseWheelX() { return __offsetX ; }
-int hrt_getMouseWheelY() { return __offsetY ; }
+int hrt_getMouseWheelX() { return offsetX ; }
+int hrt_getMouseWheelY() { return offsetY ; }
 
 
 void hrt_destroyMouse()

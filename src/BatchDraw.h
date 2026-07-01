@@ -29,17 +29,14 @@
 
 typedef enum
 {
-    TRIANGLE                        = 24    ,
-    LINE                            = 16    ,
-    POINT                           = 8     ,
-    RECTANGLE                       = 42    ,
-    BEGIN_SCISSOR                   = 1     ,
-    END_SCISSOR                     = 2     ,
-    CIRCLE                          = 3     ,
-    TEXTURE                         = 4     ,
-    TEXT                            = 5     ,
-    NONE                            = 0     ,
-} hrt_Shape;
+    TRIANGLE                        = 3 * VERTEX_ATTRIBUTE  ,
+    LINE                            = 2 * VERTEX_ATTRIBUTE  ,
+    POINT                           = 1 * VERTEX_ATTRIBUTE  ,
+    BEGIN_SCISSOR                   = 1                     ,
+    END_SCISSOR                     = 2                     ,
+    CIRCLE                          = 3                     ,
+    NONE                            = 0                     ,
+} hrt_DrawCall;
 
 
 typedef struct
@@ -84,8 +81,8 @@ typedef struct
 } hrt_EnglishFont;
 
 
-typedef struct _Dynamic _Dynamic;
-typedef struct _Static _Static;
+typedef struct hrt_Dynamic hrt_Dynamic;
+typedef struct hrt_Static hrt_Static;
 
 
 typedef struct
@@ -95,14 +92,14 @@ typedef struct
 
     GLuint vao , vbo;
 
-    int batch[256]                              ; // [shape , amount , shape , amount , scissor , shape , amount , texture , texture , ...]
-    unsigned int currBatchIdx                   ;
-    hrt_Shape currBatchShape                    ;
-    hrt_Rect scissor[20]                        ;
-    unsigned int currScissorIdx                 ;
+    int batch[256];                             // [shape , amount , shape , amount , scissor , shape , amount , texture , texture , ...]
+    unsigned int currBatchIdx;
+    hrt_DrawCall currBatchShape;
+    hrt_Rect scissor[20];
+    unsigned int currScissorIdx;
 
-    _Dynamic* Dynamic;
-} BatchDraw;
+    hrt_Dynamic* Dynamic;
+} hrt_BatchDraw;
 
 
 
@@ -113,7 +110,7 @@ void hrt_BatchDraw_setProjection();
 
 // ======================================
 // Bathcing for primitive types
-struct _Dynamic
+struct hrt_Dynamic
 {
     // pointer to end of the vertex also includes the attributes for example for a triangle we have :
     // vertexTraingle = { x1 , y1 , r1 , g1 , b1 , a1 , -1 , -1 , 
@@ -146,7 +143,7 @@ struct _Dynamic
 };
 
 
-void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_Shape shape);
+void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_DrawCall shape);
 
 
 unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path);

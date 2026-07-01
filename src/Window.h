@@ -20,12 +20,12 @@ typedef struct hrt_TextInputHandler
 
 } hrt_TextInputHandler;
 
+
 typedef struct hrt_Keyboard
 {
     hrt_TextInputHandler TIH;
 
 } hrt_Keyboard;
-
 
 
 //                      -- Mouse --

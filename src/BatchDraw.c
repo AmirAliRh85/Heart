@@ -16,11 +16,11 @@
 */
 // ============================================================================================================================
 
-static BatchDraw* CORE;
+static hrt_BatchDraw* CORE;
 
 static GLuint program;
 
-char* _textBuff;
+char* textBuff;
 
 static const char* VERTEX_SHADER_SOURCE = "#version 330 core\n"
 "layout (location = 0) in vec2 aPos;\n"
@@ -132,16 +132,16 @@ void hrt_BatchDraw_init()
 
     hrt_ResouceTracker_create();
 
-    _textBuff = (char*)hrt_malloc(1024 , "_textBuff in BatchDraw.c");
+    textBuff = (char*)hrt_malloc(1024 , "textBuff in BatchDraw.c");
 
 
-    CORE = (BatchDraw*)hrt_malloc(sizeof(BatchDraw) , "CORE");
+    CORE = (hrt_BatchDraw*)hrt_malloc(sizeof(hrt_BatchDraw) , "CORE");
     CORE->currBatchIdx = 0;
     CORE->currScissorIdx = 0;
     CORE->currBatchShape = NONE;
     
 
-    CORE->Dynamic = (_Dynamic*)hrt_malloc(sizeof(_Dynamic) , "Dynamic for CORE");
+    CORE->Dynamic = (hrt_Dynamic*)hrt_malloc(sizeof(hrt_Dynamic) , "Dynamic for CORE");
     
     CORE->Dynamic->vertexTriangle = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE , "Dynamic's traignles's vertex");
     CORE->Dynamic->currVertexTriangleIdx = 0;
@@ -247,7 +247,7 @@ static void insertPrimitive()
     CORE->Dynamic->currVertexPointIdxInserted = CORE->Dynamic->currVertexPointIdx;
 }
 
-void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_Shape shape)
+void hrt_BatchDraw_Dynamic_addPrimitive(float* arr , hrt_DrawCall shape)
 {
     if (CORE->currBatchShape == NONE)
         allocPrimitve();
@@ -549,10 +549,10 @@ void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , uns
 
 void hrt_BatchDraw_Dynamic_addEnglishTextEx(hrt_Pos point , const char* text , int len , unsigned int font_id , int r , int g , int b , int a)
 {
-    mempcpy(_textBuff , text , len);
-    _textBuff[len] = '\0';
+    mempcpy(textBuff , text , len);
+    textBuff[len] = '\0';
 
-    hrt_BatchDraw_Dynamic_addEnglishText(point , _textBuff , font_id , r , g , b , a);
+    hrt_BatchDraw_Dynamic_addEnglishText(point , textBuff , font_id , r , g , b , a);
 }
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned int font_id)
@@ -583,10 +583,10 @@ hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned in
 
 hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSizeEx(const char* text , unsigned int font_id , int len)
 {
-    memcpy(_textBuff , text , len);
-    _textBuff[len] = '\0';
+    memcpy(textBuff , text , len);
+    textBuff[len] = '\0';
 
-    return hrt_BatchDraw_Dynamic_getEnglishTextSize(_textBuff , font_id);
+    return hrt_BatchDraw_Dynamic_getEnglishTextSize(textBuff , font_id);
 }
 
 int hrt_BatchDraw_Dynamic_getEnglishTextWidth(const char* text , unsigned int font_id)
@@ -820,7 +820,7 @@ void hrt_BatchDraw_destroy()
     glDeleteVertexArrays(1 , &CORE->vao);
     glDeleteBuffers(1 , &CORE->vbo);
 
-    hrt_free(_textBuff);
+    hrt_free(textBuff);
     
     hrt_free(CORE->Dynamic->vertexTriangle);
     hrt_free(CORE->Dynamic->vertexLine);

@@ -3,7 +3,7 @@
 
 
 
-static void __textInput(GLFWwindow* window , unsigned int code_point)
+static void textInput(GLFWwindow* window , unsigned int code_point)
 {
     WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx] = (char)code_point;
     WINDOW.Keyboard.TIH.objectAddress[WINDOW.Keyboard.TIH.currentIdx + 1] = '\0';
@@ -35,7 +35,7 @@ void hrt_enableTextInput(char* ch_ptr , int current_string_length , int buffer_s
         WINDOW.Keyboard.TIH.objectAddress = ch_ptr;
         WINDOW.Keyboard.TIH.currentIdx = current_string_length;
         WINDOW.Keyboard.TIH.bufferSize = buffer_size;
-        glfwSetCharCallback(WINDOW.GLFW_window , __textInput);
+        glfwSetCharCallback(WINDOW.GLFW_window , textInput);
     }
 
     // if (glfwGetKey(WINDOW.GLFW_window , GLFW_KEY_BACKSPACE) == GLFW_PRESS)

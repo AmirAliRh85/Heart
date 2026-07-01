@@ -5,8 +5,9 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <string.h>
-//                  -- algorithms --
 
+
+//                  -- algorithms --
 //                  -- DynamicArray --
 typedef struct hrt_DynamicArray
 {
@@ -30,19 +31,9 @@ int hrt_DynamicArray_length(hrt_DynamicArray* da);
 int hrt_DynamicArray_capacity(hrt_DynamicArray* da);
 int hrt_DynamicArray_find(hrt_DynamicArray* da , const void* val);
 
-//                  -- LinkedList --
-
-typedef struct hrt_Node1 hrt_Node1;
-
-struct hrt_Node1
-{
-    hrt_Node1* next;
-    void* value;
-};
-
-// extern hrt_Node1* head;
 
 //                  -- Pair --
+
 
 typedef enum
 {
@@ -70,18 +61,13 @@ int hrt_Pair_length(hrt_Pair* p);
 int hrt_Pair_capacity(hrt_Pair* p);
 
 
+//                  -- LinkedList --
+
+
+
+
+
 //                  -- Stack --
-
-typedef struct hrt_Node
-{
-    
-} hrt_Node;
-
-
-typedef struct hrt_Stack
-{
-
-} hrt_Stack;
 
 
 hrt_Pair* hrt_Stack_create(int sizeof_first_item , int sizeof_second_item);
@@ -94,29 +80,24 @@ int hrt_Stack_size(hrt_Pair* p);
 
 //                  -- Hashmap --
 
-/*
-typedef struct
-{
-    int keySize;
-    int valueSize;
-} hrt_Hashmap;
-*/
 
 
 //                  -- Log --
 
-/*
+
 typedef enum
 {
     WARNING     ,
-    ERROR
+    ERROR       ,
+    INFO        ,
+    NOTE        
 } LogLevel;
 
 typedef struct
 {
-    char** log;
+    char* log;
 } hrt_Log;
-*/
+
 
 //                  -- Debugging --
 

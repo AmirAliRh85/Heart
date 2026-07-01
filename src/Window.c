@@ -1,5 +1,4 @@
 #include "Window.h"
-// #include "./Utils.h"
 
 hrt_Window WINDOW;
 

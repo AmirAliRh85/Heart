@@ -136,7 +136,6 @@ typedef enum
 bool hrt_isKeyPressed(hrt_KeyboardFlag keyboard_flag);
 bool hrt_isKeyReleased(hrt_KeyboardFlag keyboard_flag);
 
-
 void hrt_enableTextInput(char* ch_ptr , int string_length , int buffer_size);
 void hrt_disableTextInput();
 
@@ -168,14 +167,13 @@ typedef enum hrt_CursorFlag
 } hrt_CursorFlag;
 
 
-
 bool hrt_isMouseIn(hrt_Rect rect);
 bool hrt_isMousePressed(hrt_MouseFlag mouse_flag);
 bool hrt_isMouseReleased(hrt_MouseFlag mouse_flag);
 bool hrt_isMouseClicked(hrt_MouseFlag mouse_flag);
 
 
-void hrt_setMouseCursor(hrt_CursorFlag cf);
+void hrt_setMouseCursor(hrt_CursorFlag cursor_type);
 
 
 void hrt_enableMouseScrollMovement();
@@ -204,7 +202,7 @@ void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_
 hrt_Size hrt_getTextSize(const char* text , unsigned int font_id);
 int hrt_getTextWidth(const char* text , unsigned int font_id);
 int hrt_getTextHeight(unsigned int font_id);
-void __hrt_drawTextureAtlas(hrt_Rect rct);
+void hrt__drawTextureAtlas(hrt_Rect rct);
 
 void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b , int a);
 void hrt_drawFilledRectangle(hrt_Rect rect , int r , int g , int b , int a);

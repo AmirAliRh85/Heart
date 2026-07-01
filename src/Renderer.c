@@ -2,12 +2,11 @@
 #define HRT_RENDERER_H
 
 #include "./Window.h"
-// #include "./Utils.h"
 #include "./BatchDraw.h"
 #include <math.h>
 
-#define __HRT_SHOULD_BE_RENDERED(x , y , w , h , __must_be_renderer)    \
-    if (!(__must_be_renderer))                  \
+#define SHOULD_BE_RENDERED(x , y , w , h , must_be_renderer)    \
+    if (!(must_be_renderer))                    \
         do                                      \
         {                                       \
             if (x > w || y > h)                 \
@@ -15,11 +14,11 @@
         } while(0)
 
 
-static bool __isScissoringDisabled = true;
-static int __tempScissorWidth = -1;
-static int __tempScissorHeight = -1;
+static bool isScissoringDisabled = true;
+static int tempScissorWidth = -1;
+static int tempScissorHeight = -1;
 
-static void __framebufferCallback(GLFWwindow* window , int w , int h)
+static void framebufferCallback(GLFWwindow* window , int w , int h)
 {
     WINDOW.width = w;
     WINDOW.height = h;
@@ -32,7 +31,7 @@ static void __framebufferCallback(GLFWwindow* window , int w , int h)
 void hrt_initRenderer()
 {
     hrt_BatchDraw_init();
-    glfwSetFramebufferSizeCallback(WINDOW.GLFW_window , __framebufferCallback);
+    glfwSetFramebufferSizeCallback(WINDOW.GLFW_window , framebufferCallback);
 }
 
 
@@ -47,7 +46,7 @@ unsigned int hrt_loadImage(const char* file_path)
 void hrt_drawImage(hrt_Rect rct , unsigned int index_to_draw)
 {
     hrt_Pos point1 = {rct.x , rct.y};
-    __HRT_SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
+    SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
     hrt_Pos point2 = {rct.x + rct.w , rct.y};
     hrt_Pos point3 = {rct.x , rct.y + rct.h};
     hrt_Pos point4 = {rct.x + rct.w , rct.y + rct.h};
@@ -72,7 +71,7 @@ unsigned int hrt_loadFont(const char* font_path , unsigned int font_size)
 
 void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int r , int g , int b , int a)
 {
-    __HRT_SHOULD_BE_RENDERED(point.x , point.y , WINDOW.width , WINDOW.height , 0);
+    SHOULD_BE_RENDERED(point.x , point.y , WINDOW.width , WINDOW.height , 0);
     hrt_BatchDraw_Dynamic_addEnglishText(point , text , font_id , r , g , b , a);
 }
 
@@ -117,10 +116,10 @@ int hrt_getTextHeight(unsigned int font_id)
 }
 
 
-void __hrt_drawTextureAtlas(hrt_Rect rct)
+void hrt__drawTextureAtlas(hrt_Rect rct)
 {
     hrt_Pos point1 = {rct.x , rct.y};
-    __HRT_SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 1);
+    SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 1);
     hrt_Pos point2 = {rct.x + rct.w , rct.y};
     hrt_Pos point3 = {rct.x , rct.y + rct.h};
     hrt_Pos point4 = {rct.x + rct.w , rct.y + rct.h};
@@ -149,8 +148,8 @@ void hrt_drawBackground(int r , int g , int b , int a)
 
 void hrt_drawTriangle(hrt_Pos point1 , hrt_Pos point2 , hrt_Pos point3 , int r , int g , int b , int a)
 {
-    __HRT_SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
-    __HRT_SHOULD_BE_RENDERED(point1.x , point1.y , __tempScissorWidth , __tempScissorHeight , __isScissoringDisabled);
+    SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
+    SHOULD_BE_RENDERED(point1.x , point1.y , tempScissorWidth , tempScissorHeight , isScissoringDisabled);
     float temp[] = {
         point1.x , point1.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f ,
         point2.x , point2.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f ,
@@ -257,7 +256,7 @@ void hrt_drawRectangle(hrt_Rect rect , int thickness , int r , int g , int b , i
 // It's recommended to not be used (it is deprecated)
 void hrt_drawPoint(hrt_Pos point1 , int r , int g , int b , int a)
 {
-    __HRT_SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
+    SHOULD_BE_RENDERED(point1.x , point1.y , WINDOW.width , WINDOW.height , 0);
     float temp[] = {
         point1.x , point1.y , RGBA_TO_GL(r , g , b , a) , -1.0f , -1.0f
     };
@@ -313,15 +312,15 @@ void drawShapeR(Rect rect , const std::vector<std::vector<int>>& shape)
 
 void hrt_beginScissor(hrt_Rect rect)
 {
-    __isScissoringDisabled = false;
-    __tempScissorWidth = rect.w;
-    __tempScissorHeight = rect.h;
+    isScissoringDisabled = false;
+    tempScissorWidth = rect.w;
+    tempScissorHeight = rect.h;
     rect.y = hrt_getWindowHeight() - rect.h - rect.y;
     hrt_BatchDraw_beginScissor(rect);
 }
 void hrt_endScissor()
 {
-    __isScissoringDisabled = true;
+    isScissoringDisabled = true;
     hrt_BatchDraw_endScissor();
 }
 
