@@ -1,6 +1,7 @@
 #include "./Heart.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <GLFW/glfw3.h>
 
 // this is just for testing new features
 
@@ -13,6 +14,7 @@ int main()
 {
     hrt_createWindow(800 , 400 , "Testing" , HRT_WINDOW_SHOWN , HRT_WINDOW_POS_CENTERED , HRT_WINDOW_POS_CENTERED);
 
+    
 
     while (hrt_isWindowRunning())
     {

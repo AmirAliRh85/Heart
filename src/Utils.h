@@ -84,28 +84,43 @@ int hrt_Stack_size(hrt_Pair* p);
 
 //                  -- Log --
 
+typedef struct hrt_ResourceTracker hrt_ResourceTracker;
+
 
 typedef enum
 {
-    WARNING     ,
-    ERROR       ,
-    INFO        ,
-    NOTE        
-} LogLevel;
+    TRACE       = 0 ,
+    INFO        = 1 ,
+    ERROR       = 2 ,
+    WARNING     = 3 ,
+    FATAL       = 4
+} hrt_LogLevel;
 
-typedef struct
+
+// it will only save the logs when the level is between min and max level
+typedef struct hrt_Log
 {
+    const char* title;
+    hrt_LogLevel minLevel;
+    hrt_LogLevel maxLevel;
     char* log;
+    // int currLogIdx;
 } hrt_Log;
 
+hrt_Log* hrt_Log_create(const char* title , hrt_LogLevel min_level , hrt_LogLevel max_level , int log_size);
+
+hrt_Log_add(hrt_Log* log , hrt_LogLevel level , const char* text);
+hrt_Log_flush(hrt_Log* log);
+
+hrt_Log_destroy(hrt_Log* log);
 
 //                  -- Debugging --
 
-typedef struct hrt_ResourceTracker
+struct hrt_ResourceTracker
 {
     hrt_DynamicArray* addressAllocated;
     int memAllocated;
-} hrt_ResourceTracker;
+};
 
 extern hrt_ResourceTracker ResourceTracker;
 
