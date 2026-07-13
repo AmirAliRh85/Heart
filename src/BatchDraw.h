@@ -51,7 +51,7 @@ typedef struct
     float height;
     bool isInitialized;                         // default is false
     int heightOccupied;                         // default is 0
-    hrt_DynamicArray* shelves;
+    ark_DynamicArray* shelves;
     unsigned int currShelfIdx;
 } hrt_TextureAtlas;
 
@@ -77,7 +77,7 @@ typedef struct
     int maxHeight;                              // default is 0
     int maxBearingY;                            // default is 0
     int maxUnderlineY;                          // default is 0
-    hrt_Pair* characters;                       // char, Characters
+    ark_Pair* characters;                       // char, Characters
 } hrt_EnglishFont;
 
 

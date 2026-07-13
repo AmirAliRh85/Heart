@@ -24,7 +24,7 @@ static void framebufferCallback(GLFWwindow* window , int w , int h)
     WINDOW.height = h;
     glViewport(0 , 0 , WINDOW.width , WINDOW.height);
 
-    // printf("Framebuffer size got changed\n");
+    ARK_INFO(WINDOW.logger , "Framebuffer size got changed to w = %i , h = %i" , w , h);
 }
 
 
@@ -74,11 +74,6 @@ void hrt_drawText(hrt_Pos point , const char* text , unsigned int font_id , int 
     SHOULD_BE_RENDERED(point.x , point.y , WINDOW.width , WINDOW.height , 0);
     hrt_BatchDraw_Dynamic_addEnglishText(point , text , font_id , r , g , b , a);
 }
-
-// static __hrt_getTextIdxLower(const char* text , unsigned int font_id , int fixed_width)
-// {
-    
-// }
 
 void hrt_drawMultiLineText(hrt_Pos point , const char* text , unsigned int font_id , int fixed_width , int r , int g , int b , int a)
 {

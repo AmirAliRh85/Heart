@@ -51,7 +51,11 @@ typedef struct hrt_Window
     int maxWidth , maxHeight , minWidth , minHeight;
     int fps;
     int windowFlag;
+    int opacity;
     const char* title;
+
+    // DEBUGGING
+    ark_Log* logger;
 
     // GLFW PROPERTY
     GLFWwindow* GLFW_window;

@@ -1,10 +1,12 @@
 #include "Window.h"
 
 hrt_Window WINDOW;
-
+ark_MemoryManager* memoryManager;
 
 int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , int x_pos , int y_pos)
 {
+    WINDOW.logger = ark_Log_create(stdout , ARK_TRACE , false , false);
+
     glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR , 3);
@@ -26,6 +28,7 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
     WINDOW.minWidth = 100;
     WINDOW.minHeight = 0;
     WINDOW.fps = 45;
+    WINDOW.opacity = 255;
     WINDOW.windowFlag = wnd_flag;
     WINDOW.title = window_name;
 
@@ -74,12 +77,17 @@ int hrt_createWindow(int w , int h , const char* window_name , int wnd_flag , in
     glfwMakeContextCurrent(WINDOW.GLFW_window);
     glfwSwapInterval(1);
 
+    ARK_INFO(WINDOW.logger , "Window got initialized successfully");
+
     WINDOW.Keyboard.TIH.objectAddress = NULL;
+    ARK_INFO(WINDOW.logger , "Keyboard got initialized successfully");
 
     hrt_setMouseCursor(HRT_ARROW_CURSOR);
     hrt_enableMouseScrollMovement();
+    ARK_INFO(WINDOW.logger , "Mouse got initialized successfully");
 
     hrt_initRenderer();
+    ARK_INFO(WINDOW.logger , "Renderer got initialized successfully");
 
     return 0;
 }
@@ -88,28 +96,41 @@ void hrt_setWindowOpacity(int alpha)
 {
     if (HRT_WINDOW_TRANSPARENT & WINDOW.windowFlag)
     {
+        if (alpha < 0 || alpha > 255 )
+            ARK_WARNING(WINDOW.logger , "your alpha number(%i) should be between 0 and 255" , alpha);
+
+        alpha = alpha % 256;
+        ARK_INFO(WINDOW.logger , "window's opacity got changed from %i to %i" , WINDOW.opacity , alpha);
         glfwSetWindowOpacity(WINDOW.GLFW_window , alpha / 255.0f);
     }
 }
 void hrt_stopWindowRunning() { glfwSetWindowShouldClose(WINDOW.GLFW_window , 1) ; }
-void hrt_setWindowTitle(const char* new_window_name) { glfwSetWindowTitle(WINDOW.GLFW_window , new_window_name) ; }
+void hrt_setWindowTitle(const char* new_window_title)
+{
+    ARK_INFO(WINDOW.logger , "Window's title got set to %s" , new_window_title);
+    glfwSetWindowTitle(WINDOW.GLFW_window , new_window_title);
+}
 void hrt_setWindowMinWidth(int w)
 {
+    ARK_INFO(WINDOW.logger , "Window's width got set to %i" , w);
     WINDOW.minWidth = w;
     glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
 }
 void hrt_setWindowMinHeight(int h)
 {
+    ARK_INFO(WINDOW.logger , "Window's height got set to %i" , h);
     WINDOW.minHeight = h;
     glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
 }
 void hrt_setWindowMaxWidth(int w)
 {
+    ARK_INFO(WINDOW.logger , "Window's max width got set to %i" , w);
     WINDOW.maxWidth = w;
     glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
 }
 void hrt_setWindowMaxHeight(int h)
 {
+    ARK_INFO(WINDOW.logger , "Window's max height got set to %i" , h);
     WINDOW.maxHeight = h;
     glfwSetWindowSizeLimits(WINDOW.GLFW_window , WINDOW.minWidth , WINDOW.minHeight , WINDOW.maxWidth , WINDOW.maxHeight);
 }
@@ -140,6 +161,8 @@ void hrt_updateWindow()
 
 void hrt_destroyWindow()
 {
+    ark_Log_destroy(WINDOW.logger);
+
     hrt_destroyMouse();
     hrt_destroyRenderer();
     glfwDestroyWindow(WINDOW.GLFW_window);

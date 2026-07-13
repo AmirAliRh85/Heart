@@ -130,49 +130,47 @@ void hrt_BatchDraw_init()
 
     printf("================ GCL ================\n");
 
-    hrt_ResouceTracker_create();
-
-    textBuff = (char*)hrt_malloc(1024 , "textBuff in BatchDraw.c");
+    textBuff = (char*)malloc(1024);
 
 
-    CORE = (hrt_BatchDraw*)hrt_malloc(sizeof(hrt_BatchDraw) , "CORE");
+    CORE = (hrt_BatchDraw*)malloc(sizeof(hrt_BatchDraw));
     CORE->currBatchIdx = 0;
     CORE->currScissorIdx = 0;
     CORE->currBatchShape = NONE;
     
 
-    CORE->Dynamic = (hrt_Dynamic*)hrt_malloc(sizeof(hrt_Dynamic) , "Dynamic for CORE");
+    CORE->Dynamic = (hrt_Dynamic*)malloc(sizeof(hrt_Dynamic));
     
-    CORE->Dynamic->vertexTriangle = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE , "Dynamic's traignles's vertex");
+    CORE->Dynamic->vertexTriangle = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_TRAINGLE * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexTriangleIdx = 0;
     CORE->Dynamic->currVertexTriangleIdxInserted = 0;
-    CORE->Dynamic->vertexLine = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE * VERTEX_ATTRIBUTE , "Dynamic's lines's vertex");
+    CORE->Dynamic->vertexLine = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_LINE * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexLineIdx = 0;
     CORE->Dynamic->currVertexLineIdxInserted = 0;
-    CORE->Dynamic->vertexPoint = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT * VERTEX_ATTRIBUTE , "Dynamic's points's vertex");
+    CORE->Dynamic->vertexPoint = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX_POINT * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexPointIdx = 0;
     CORE->Dynamic->currVertexPointIdxInserted = 0;
 
-    CORE->Dynamic->vertexDynamic = (float*)hrt_malloc(sizeof(float) * MAX_DYNAMIC_VERTEX * VERTEX_ATTRIBUTE , "Dynamic's vertex");
+    CORE->Dynamic->vertexDynamic = (float*)malloc(sizeof(float) * MAX_DYNAMIC_VERTEX * VERTEX_ATTRIBUTE);
     CORE->Dynamic->currVertexDynamicIdx = 0;
 
     CORE->Dynamic->texID = 0;
     CORE->Dynamic->texUnit = 0;
 
-    CORE->Dynamic->TA = (hrt_TextureAtlas*)hrt_malloc(sizeof(hrt_TextureAtlas) * MAX_ATLAS , "TextureAtlas");
+    CORE->Dynamic->TA = (hrt_TextureAtlas*)malloc(sizeof(hrt_TextureAtlas) * MAX_ATLAS);
     CORE->Dynamic->TA->width = ATLAS_WIDTH;
     CORE->Dynamic->TA->height = ATLAS_HEIGHT;
     CORE->Dynamic->TA->heightOccupied = 0;
-    CORE->Dynamic->TA->shelves = hrt_DynamicArray_create(sizeof(hrt_Shelf));
+    CORE->Dynamic->TA->shelves = ark_DynamicArray_create(sizeof(hrt_Shelf));
     CORE->Dynamic->TA->isInitialized = false;
     CORE->Dynamic->TA->currShelfIdx = 0;
 
-    CORE->Dynamic->image = (hrt_Image*)hrt_malloc(sizeof(hrt_Image) * MAX_IMAGE , "Dynamic's Image");
+    CORE->Dynamic->image = (hrt_Image*)malloc(sizeof(hrt_Image) * MAX_IMAGE);
     CORE->Dynamic->currImageIdx = 0;
 
     CORE->Dynamic->currEFIdx = 0;
-    CORE->Dynamic->EF = (hrt_EnglishFont*)hrt_malloc(sizeof(hrt_EnglishFont) * MAX_FONT , "Dynamic's English Font");
-    CORE->Dynamic->EF->characters = hrt_Pair_create(sizeof(unsigned char) , sizeof(hrt_Character));
+    CORE->Dynamic->EF = (hrt_EnglishFont*)malloc(sizeof(hrt_EnglishFont) * MAX_FONT);
+    CORE->Dynamic->EF->characters = ark_Pair_create(sizeof(unsigned char) , sizeof(hrt_Character));
 
 
     hrt_BatchDraw_setProgram(program);
@@ -305,7 +303,7 @@ unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path)
         CORE->Dynamic->TA->isInitialized = true;
         CORE->Dynamic->TA->width = ATLAS_WIDTH;
         CORE->Dynamic->TA->height = ATLAS_HEIGHT;
-        hrt_DynamicArray_push(CORE->Dynamic->TA->shelves , &((hrt_Shelf){(hrt_Vec2){w , 0} , h}));
+        ark_DynamicArray_push(CORE->Dynamic->TA->shelves , &((hrt_Shelf){(hrt_Vec2){w , 0} , h}));
         CORE->Dynamic->TA->heightOccupied = h;
 
         CORE->Dynamic->image[CORE->Dynamic->currImageIdx] = (hrt_Image){(hrt_Vec2){0 , 0} , (hrt_Vec2){w , h}};
@@ -327,9 +325,9 @@ unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path)
     else
     {
         bool is_inserted = false;
-        for (int i = 0 ; i < hrt_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
+        for (int i = 0 ; i < ark_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
         {
-            hrt_Shelf* s = hrt_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
+            hrt_Shelf* s = ark_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
             if (h <= s->height && s->currentPos.x + w <= CORE->Dynamic->TA->width)
             {
                 CORE->Dynamic->image[CORE->Dynamic->currImageIdx] = (hrt_Image){(hrt_Vec2){s->currentPos.x , s->currentPos.y} , (hrt_Vec2){s->currentPos.x + w , s->currentPos.y + h}};
@@ -345,7 +343,7 @@ unsigned int hrt_BatchDraw_Dynamic_loadImage(const char* file_path)
 
         if (!is_inserted)
         {
-            hrt_DynamicArray_push(CORE->Dynamic->TA->shelves , &((hrt_Image){(hrt_Vec2){w , CORE->Dynamic->TA->heightOccupied} , h}));
+            ark_DynamicArray_push(CORE->Dynamic->TA->shelves , &((hrt_Image){(hrt_Vec2){w , CORE->Dynamic->TA->heightOccupied} , h}));
             CORE->Dynamic->image[CORE->Dynamic->currImageIdx] = (hrt_Image){(hrt_Vec2){0 , CORE->Dynamic->TA->heightOccupied} , (hrt_Vec2){w , CORE->Dynamic->TA->heightOccupied + h}};
             CORE->Dynamic->currImageIdx += 1;
 
@@ -440,10 +438,10 @@ unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsig
             CORE->Dynamic->TA->isInitialized = true;
             CORE->Dynamic->TA->width = ATLAS_WIDTH;
             CORE->Dynamic->TA->height = ATLAS_HEIGHT;
-            hrt_DynamicArray_push(CORE->Dynamic->TA->shelves , &(hrt_Shelf){(hrt_Vec2){w , 0} , h});
+            ark_DynamicArray_push(CORE->Dynamic->TA->shelves , &(hrt_Shelf){(hrt_Vec2){w , 0} , h});
             CORE->Dynamic->TA->heightOccupied = h;
 
-            hrt_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {0 , 0} , {w , h} , face->glyph->advance.x >> 6});
+            ark_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {0 , 0} , {w , h} , face->glyph->advance.x >> 6});
             // CORE->Dynamic->EF[CORE->Dynamic->currEFIdx].characters[c] = {{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {0 , 0} , {w , h} , face->glyph->advance.x >> 6};
             
             glGenTextures(1 , &CORE->Dynamic->texID);
@@ -461,14 +459,14 @@ unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsig
         else
         {
             bool is_inserted = false;
-            for (int i = 0 ; i < hrt_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
+            for (int i = 0 ; i < ark_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
             {
-                hrt_Shelf* s = (hrt_Shelf*)hrt_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
+                hrt_Shelf* s = (hrt_Shelf*)ark_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
                 if (h <= s->height && s->currentPos.x + w <= CORE->Dynamic->TA->width)
                 {
                     glTexSubImage2D(GL_TEXTURE_2D , 0 , s->currentPos.x , s->currentPos.y , w , h , GL_RGBA , GL_UNSIGNED_BYTE , rgba);
                     
-                    hrt_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {s->currentPos.x , s->currentPos.y} , {s->currentPos.x + w , s->currentPos.y + h} , face->glyph->advance.x >> 6});
+                    ark_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {s->currentPos.x , s->currentPos.y} , {s->currentPos.x + w , s->currentPos.y + h} , face->glyph->advance.x >> 6});
 
                     s->currentPos.x += w;
                     is_inserted = true;
@@ -478,11 +476,11 @@ unsigned int hrt_BatchDraw_Dynamic_loadEnglishFont(const char* font_path , unsig
 
             if (!is_inserted)
             {
-                hrt_DynamicArray_push(CORE->Dynamic->TA->shelves , &(hrt_Shelf){(hrt_Vec2){w , CORE->Dynamic->TA->heightOccupied} , h});
+                ark_DynamicArray_push(CORE->Dynamic->TA->shelves , &(hrt_Shelf){(hrt_Vec2){w , CORE->Dynamic->TA->heightOccupied} , h});
                 
                 glTexSubImage2D(GL_TEXTURE_2D , 0 , 0 , CORE->Dynamic->TA->heightOccupied , w , h , GL_RGBA , GL_UNSIGNED_BYTE , rgba);
 
-                hrt_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {0 , CORE->Dynamic->TA->heightOccupied} , {w , CORE->Dynamic->TA->heightOccupied + h} , face->glyph->advance.x >> 6});
+                ark_Pair_push(CORE->Dynamic->EF->characters , &c , &(hrt_Character){{w , h} , {face->glyph->bitmap_left , face->glyph->bitmap_top} , {0 , CORE->Dynamic->TA->heightOccupied} , {w , CORE->Dynamic->TA->heightOccupied + h} , face->glyph->advance.x >> 6});
                 
                 CORE->Dynamic->TA->heightOccupied += h;
             }
@@ -508,11 +506,11 @@ void hrt_BatchDraw_Dynamic_addEnglishText(hrt_Pos point , const char* text , uns
         c = *text;
         hrt_Character ch;
 
-        for (int i = 0 ; i < hrt_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
+        for (int i = 0 ; i < ark_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
         {
-            if (c == *(char*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , FIRST))
+            if (c == *(char*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_FIRST))
             {
-                ch = *(hrt_Character*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , SECOND);
+                ch = *(hrt_Character*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_SECOND);
                 break;
             }
         }
@@ -565,11 +563,11 @@ hrt_Size hrt_BatchDraw_Dynamic_getEnglishTextSize(const char* text , unsigned in
         c = *text;
 
 
-        for (int i = 0 ; i < hrt_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
+        for (int i = 0 ; i < ark_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
         {
-            if (c == *(char*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , FIRST))
+            if (c == *(char*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_FIRST))
             {
-                ch = *(hrt_Character*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , SECOND);
+                ch = *(hrt_Character*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_SECOND);
                 break;
             }
         }
@@ -599,11 +597,11 @@ int hrt_BatchDraw_Dynamic_getEnglishTextWidth(const char* text , unsigned int fo
         c = *text;
 
 
-        for (int i = 0 ; i < hrt_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
+        for (int i = 0 ; i < ark_Pair_length(CORE->Dynamic->EF[font_id].characters) ; i++)
         {
-            if (c == *(char*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , FIRST))
+            if (c == *(char*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_FIRST))
             {
-                ch = *(hrt_Character*)hrt_Pair_at(CORE->Dynamic->EF[font_id].characters , i , SECOND);
+                ch = *(hrt_Character*)ark_Pair_at(CORE->Dynamic->EF[font_id].characters , i , ARK_SECOND);
                 break;
             }
         }
@@ -706,9 +704,9 @@ static void debug()
         printf("%i\n" , CORE->Dynamic->EF[0].maxBearingY);
         printf("%i\n" , CORE->Dynamic->EF[0].maxHeight);
         printf("%i\n" , CORE->Dynamic->EF[0].maxUnderlineY);
-        for (int i = 0 ; i < hrt_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
+        for (int i = 0 ; i < ark_DynamicArray_length(CORE->Dynamic->TA->shelves) ; i++)
         {
-            hrt_Shelf s = *(hrt_Shelf*)hrt_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
+            hrt_Shelf s = *(hrt_Shelf*)ark_DynamicArray_at(CORE->Dynamic->TA->shelves , i);
             printf("shelf number %i: pos(%i , %i) , height(%i)\n" , i + 1 , s.currentPos.x , s.currentPos.y , s.height);
         }
     }
@@ -820,21 +818,19 @@ void hrt_BatchDraw_destroy()
     glDeleteVertexArrays(1 , &CORE->vao);
     glDeleteBuffers(1 , &CORE->vbo);
 
-    hrt_free(textBuff);
+    free(textBuff);
     
-    hrt_free(CORE->Dynamic->vertexTriangle);
-    hrt_free(CORE->Dynamic->vertexLine);
-    hrt_free(CORE->Dynamic->vertexPoint);
-    hrt_free(CORE->Dynamic->vertexDynamic);
-    hrt_DynamicArray_destroy(CORE->Dynamic->TA->shelves);
-    hrt_free(CORE->Dynamic->TA);
-    hrt_free(CORE->Dynamic->image);
-    hrt_Pair_destroy(CORE->Dynamic->EF->characters);
-    hrt_free(CORE->Dynamic->EF);
-    hrt_free(CORE->Dynamic);
-    hrt_free(CORE);
-
-    hrt_ResouceTracker_destroy();
+    free(CORE->Dynamic->vertexTriangle);
+    free(CORE->Dynamic->vertexLine);
+    free(CORE->Dynamic->vertexPoint);
+    free(CORE->Dynamic->vertexDynamic);
+    ark_DynamicArray_destroy(CORE->Dynamic->TA->shelves);
+    free(CORE->Dynamic->TA);
+    free(CORE->Dynamic->image);
+    ark_Pair_destroy(CORE->Dynamic->EF->characters);
+    free(CORE->Dynamic->EF);
+    free(CORE->Dynamic);
+    free(CORE);
 
     glDeleteProgram(program);
 }

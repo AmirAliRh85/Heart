@@ -3,7 +3,7 @@
 
 #define HRT_MAJOR_VERSION   0
 #define HRT_MINOR_VERSION   3
-#define HRT_PATCH_VERSION   11
+#define HRT_PATCH_VERSION   12
 
 #define HRTT__STRINGIFY(a)        #a
 #define HRT__STRINGIFY(a)         HRTT__STRINGIFY(a)
@@ -31,6 +31,7 @@
  *      0.3.9       ADD : not rendering shapes that are out of scissor rectangle or window size
  *      0.3.10      FIX : hiding external libs and implementaion from user and applying pimpl principle
  *      0.3.11      ADD : debugging mode and also better allocator function and free function for safety
+ *      0.3.12      ADD : ark library for better debugging and using custom DSA
  *
  */
 
