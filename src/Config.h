@@ -41,6 +41,7 @@
  *  3. fixing name of some functions and enums (done)
  *  4. ADD : Adding SDF for rendering rouneded shapes and rounded borders
  *  5. FIX : external libraries should not be exposed to user (done)
+ *  6. FIX : submodule
  * 
  */
 
